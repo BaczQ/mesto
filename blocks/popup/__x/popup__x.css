@@ -1,0 +1,27 @@
+.popup__x {
+    width: 32px;
+    height: 32px;
+    margin-left: 477px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.popup__x:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 505px) {
+    .popup__x {
+        margin-left: 400px;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .popup__x {
+        width: 20px;
+        height: 20px;
+        margin-right: 19px;
+        align-self: flex-end;
+        margin-bottom: 16px;
+    }
+}
