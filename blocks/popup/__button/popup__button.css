@@ -2,7 +2,6 @@
     font-family: inherit;
     margin: 0px auto;
     margin-top: 30px;
-    height: 50px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -14,6 +13,9 @@
     background-color: #222;
     width: 100%;
     box-sizing: border-box;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 41px;
 }
 
 .popup__button:hover {
@@ -27,9 +29,11 @@
 
 @media screen and (max-width: 470px) {
     .popup__button {
-        height: 45px;
+        padding-top: 14px;
+        padding-bottom: 14px;
         margin-top: 26px;
         font-size: 14px;
         line-height: 17px;
+        margin-bottom: 7px;
     }
 }

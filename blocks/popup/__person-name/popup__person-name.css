@@ -7,8 +7,9 @@
     line-height: 17px;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    height: 33px;
     margin-bottom: 20px;
     width: 100%;
     box-sizing: border-box;
+    padding-top: 7px;
+    padding-bottom: 8px;
 }

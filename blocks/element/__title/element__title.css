@@ -13,3 +13,10 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+@media screen and (max-width: 310px) {
+    .element__title {
+        font-size: 7.5vw;
+        line-height: 9.063vw;
+    }
+}
