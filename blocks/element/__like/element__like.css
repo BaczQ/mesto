@@ -5,7 +5,7 @@
     align-self: center;
     margin-right: 20px;
     min-width: 22px;
-    height: 19px;
+    min-height: 19px;
     background: url(../../../images/element/__like/heart_disabled.svg);
     background-repeat: no-repeat;
     }

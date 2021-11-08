@@ -1,6 +1,5 @@
 .popup__x {
-    width: 32px;
-    height: 32px;
+    max-width: 32px;
     margin-left: 477px;
     margin-bottom: 8px;
     cursor: pointer;
@@ -18,8 +17,7 @@
 
 @media screen and (max-width: 470px) {
     .popup__x {
-        width: 20px;
-        height: 20px;
+        max-width: 20px;
         margin-right: 19px;
         align-self: flex-end;
         margin-bottom: 16px;

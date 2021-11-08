@@ -7,4 +7,4 @@
 
 Планирую продолжать работу над проектом, если это потребуется!
 
-Рабочая страничка: https://baczq.github.io/russian-travel/index.html
+Рабочая страничка: https://baczq.github.io/mesto/
