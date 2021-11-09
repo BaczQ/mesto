@@ -1,6 +1,6 @@
 .profile__add-button {
     background-color: #222;
-    width: 150px;
+    min-width: 150px;
     min-height: 50px;
     align-self: center;
     background: url(../../../images/profile/__add-button/plus.svg) no-repeat;
@@ -18,12 +18,17 @@
     opacity: .6;
 }
 
-@media screen and (max-width: 475px) {
+@media screen and (max-width: 768px) {
     .profile__add-button {
         width: calc(100vw - 38px);
-        background-size: 16px 16px;
         margin-top: 36px;
         padding: 0 19px;
         box-sizing: border-box;
     }
+}
+
+@media screen and (max-width: 475px) {
+    .profile__add-button {
+        background-size: 16px 16px;
+}
 }

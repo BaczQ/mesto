@@ -1,12 +1,16 @@
 .popup__close-btn {
     min-width: 32px;
+    min-height: 32px;
     margin-left: 477px;
     margin-bottom: 8px;
     cursor: pointer;
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
-    overflow: hidden;        
+    overflow: hidden;
+    background: url(../../../images/popup/__close-btn/close-icon.svg) no-repeat;
+    background-size: 32px 32px;
+    background-position: center;
 }
 
 .popup__close-btn:hover {
@@ -24,6 +28,7 @@
         min-width: 20px;
         margin-right: 19px;
         align-self: flex-end;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
+        background-size: 20px 20px;
     }
 }
