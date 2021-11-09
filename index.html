@@ -7,7 +7,7 @@
     <meta name="description" content="Это проект, выполненный для Спринта 4 в Яндекс Практикуме" />
     <meta name="author" content="Алексей Щербаков" />
     <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="shortcut icon" type="image/png" href="./favicon.ico" />
+    <link rel="icon" href="./favicon.svg">
     <title>Спринт 4: Проект Mesto</title>
 </head>
 
@@ -16,72 +16,72 @@
 
         <header class="header">
             <img src="./images/header/__logo/logo.svg" class="header__logo" alt="логотип" />
-            <div class="header__line"></div>
         </header>
 
         <main>
 
             <section class="profile">
-                <img src="./images/profile/__avatar/kusto.jpg" class="profile__avatar" alt="аватар Жак-Ив Кусто" />
+                <img src="./images/profile/__avatar/kusto.jpg" class="profile__avatar" alt="аватар пользователя" />
                 <div class="profile__info">
                     <div class="profile__name">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
-                        <div class="profile__edit-button"></div>
+                        <button class="profile__edit-button" type="button"></button>
+
                     </div>
                     <div class="profile__subtitle">Исследователь океана</div>
                 </div>
-                <div class="profile__add-button">
-                </div>
+                <button type="button" class="profile__add-button">
+                </button>
             </section>
 
             <section class="elements">
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/bora-bora.jpg" alt="о. Бора-Бора">
                     <div class="element__bottom">
                         <h2 class="element__title">о. Бора-Бора</h2>
-                        <div class="element__like element__like_active"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/jawa.jpg" alt="о. Ява">
                     <div class="element__bottom">
                         <h2 class="element__title">о. Ява</h2>
-                        <div class="element__like"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/zakintos.jpg" alt="о. Закинтос">
                     <div class="element__bottom">
                         <h2 class="element__title">о. Закинтос</h2>
-                        <div class="element__like"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/venice.jpg" alt="город Венеция">
                     <div class="element__bottom">
                         <h2 class="element__title">город Венеция</h2>
-                        <div class="element__like"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/fuer.jpg" alt="о. Фуэртевентура">
                     <div class="element__bottom">
                         <h2 class="element__title">о. Фуэртевентура</h2>
-                        <div class="element__like"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
+                <article class="element">
                     <img class="element__img" src="./images/element/__img/korsika.jpg" alt="о. Корсика">
                     <div class="element__bottom">
                         <h2 class="element__title">о. Корсика</h2>
-                        <div class="element__like"></div>
+                        <button type="button" class="element__like"></button>
                     </div>
-                </div>
+                </article>
             </section>
         </main>
 
@@ -92,16 +92,20 @@
     </div>
 
     <div class="popup">
-        <img class="popup__x" src="./images/popup/__x/close-icon.svg" alt="Х">
-        <form class="popup__container">
+        <button class="popup__close-btn" type="button"><img src="./images/popup/__x/close-icon.svg"
+                alt="Закрыть"></button>
+        <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <input type="text" class="popup__person-name" value="" required>
-            <input type="text" class="popup__person-job" value="" required>
-            <button type="submit" class="popup__button">Сохранить</button>
-        </form>
+            <form name="form-popup">
+                <input class="popup__form-input popup__form-input_value_name" type="text" value="" required />
+                <input class="popup__form-input popup__form-input_value_job" type="text" value="" required />
+                <button type="submit" class="popup__button">Сохранить</button>
+            </form>
+        </div>
     </div>
 
     <script src="./scripts/script.js"></script>
 
 </body>
+
 </html>

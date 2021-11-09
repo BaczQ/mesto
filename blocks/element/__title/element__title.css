@@ -4,7 +4,7 @@
     margin: 0;
     align-self: center;
     margin-left: 21px;
-    font-family: Inter;
+    font-family: 'Inter', Arial, sans-serif;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -14,9 +14,3 @@
     overflow: hidden;
 }
 
-@media screen and (max-width: 310px) {
-    .element__title {
-        font-size: 7.5vw;
-        line-height: 9.063vw;
-    }
-}

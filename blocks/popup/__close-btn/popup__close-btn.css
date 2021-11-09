@@ -1,23 +1,27 @@
-.popup__x {
-    max-width: 32px;
+.popup__close-btn {
+    min-width: 32px;
     margin-left: 477px;
     margin-bottom: 8px;
     cursor: pointer;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    overflow: hidden;        
 }
 
-.popup__x:hover {
+.popup__close-btn:hover {
     opacity: .6;
 }
 
 @media screen and (max-width: 505px) {
-    .popup__x {
+    .popup__close-btn {
         margin-left: 400px;
     }
 }
 
 @media screen and (max-width: 470px) {
-    .popup__x {
-        max-width: 20px;
+    .popup__close-btn {
+        min-width: 20px;
         margin-right: 19px;
         align-self: flex-end;
         margin-bottom: 16px;
