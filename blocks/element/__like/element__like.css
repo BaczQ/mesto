@@ -1,5 +1,4 @@
 .element__like {
-    background-color: #434;
     padding: 0;
     margin: 0;
     align-self: center;
@@ -9,8 +8,8 @@
     background: url(../../../images/element/__like/heart_disabled.svg);
     background-repeat: no-repeat;
     border: 0;
-    cursor: pointer;    
-    }
+    cursor: pointer;
+}
 
 .element__like:hover {
     opacity: .5;
