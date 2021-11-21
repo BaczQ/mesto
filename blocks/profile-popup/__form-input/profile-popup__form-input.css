@@ -1,4 +1,4 @@
-.popup__form-input {
+.profile-popup__form-input {
     font-family: inherit;
     margin: 0;
     font-style: normal;
@@ -14,18 +14,18 @@
     padding-bottom: 8px;
 }
 
-.popup__form-input:hover {
+.profile-popup__form-input:hover {
     opacity: .6;
 }
 
 @media screen and (max-width: 505px) {
-    .popup__form-input {
+    .profile-popup__form-input {
         margin-left: 0;
     }
 }
 
 @media screen and (max-width: 470px) {
-    .popup__form-input {
+    .profile-popup__form-input {
         min-width: 20px;
         margin-right: 19px;
         align-self: flex-end;

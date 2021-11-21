@@ -1,4 +1,4 @@
-.popup__button {
+.place-popup__button {
     font-family: inherit;
     font-size: 18px;
     line-height: 22px;
@@ -19,17 +19,17 @@
     margin-bottom: 38px;
 }
 
-.popup__button:hover {
+.place-popup__button:hover {
     opacity: .8;
 }
 
-.popup__button:focus {
+.place-popup__button:focus {
     outline: none;
     box-shadow: 0 0 0 4px #cbd6ee;
 }
 
 @media screen and (max-width: 470px) {
-    .popup__button {
+    .place-popup__button {
         padding-top: 14px;
         padding-bottom: 14px;
         margin-top: 26px;
