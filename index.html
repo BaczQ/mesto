@@ -44,28 +44,57 @@
 
     </div>
 
-    <div class="popup">
-        <button class="popup__close-btn" type="button"></button>
-        <div class="popup__container animation-popup">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <form name="popup-form" class="popup__form">
-                <input class="popup__form-input popup__form-input_value_name" type="text" value="" name="submitName"
-                    required />
-                <input class="popup__form-input popup__form-input_value_job" type="text" value="" name="submitJob"
-                    required />
-                <button type="submit" class="popup__button animation-elements">Сохранить</button>
+    <div class="popup profile-popup">
+        <button class="popup__close-btn profile-popup__close-btn" type="button"></button>
+        <div class="profile-popup__container animation-popup">
+            <h2 class="profile-popup__title">Редактировать профиль</h2>
+            <form name="profile-popup-form" class="profile-popup__form">
+                <input class="profile-popup__form-input profile-popup__form-input_value_name" type="text" value=""
+                    name="submitName" required />
+                <input class="profile-popup__form-input profile-popup__form-input_value_job" type="text" value=""
+                    name="submitJob" required />
+                <button type="submit" class="profile-popup__button animation-elements">Сохранить</button>
             </form>
         </div>
     </div>
 
-    <div class="image-popup">
+    <div class="popup place-popup">
+        <button class="popup__close-btn place-popup__close-btn" type="button"></button>
+        <div class="place-popup__container animation-popup">
+            <h2 class="place-popup__title">Новое место</h2>
+            <form name="place-popup-form" class="place-popup__form">
+                <input class="place-popup__form-input place-popup__form-input_value_name" type="text" value=""
+                    name="submitName" required />
+                <input class="place-popup__form-input place-popup__form-input_value_link" type="text" value=""
+                    name="submitLink" required />
+                <button type="submit" class="place-popup__button animation-elements">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup image-popup">
         <div class="image-popup__container animation-popup">
             <button class="image-popup__close-btn" type="button"></button>
-            <img src="#"
-                class="image-popup__picture" alt="Описание" />
+            <img src="#" class="image-popup__picture" alt="Описание" />
             <p class="image-popup__text">Описание</p>
         </div>
     </div>
+
+    <template class="template-element">
+        <article class="element animation-popup">
+
+            <div class="element__top">
+                <img class="element__img" src="https://cdn.pixabay.com/photo/2016/12/26/13/28/taxi-1932107_960_720.jpg"
+                    alt="1" onerror="alert('Ошибка во время загрузки изображения');">
+                <button type="button" class="element__trash animation-elements"></button>
+            </div>
+
+            <div class="element__bottom">
+                <h2 class="element__title">Тачка</h2>
+                <button type="button" class="element__like animation-elements"></button>
+            </div>
+        </article>
+    </template>
 
     <script src="./scripts/script.js"></script>
 

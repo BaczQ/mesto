@@ -25,30 +25,48 @@ const initialCards = [{
   }
 ];
 
-
-//POPUP
-const popup = document.querySelector('.popup');
-const popupTitle = popup.querySelector('.popup__title');
-
-//popup__container
-const formElement = popup.querySelector('.popup__container');
-
-//popup__form-input_value_name
-const nameInput = formElement.querySelector('.popup__form-input_value_name');
-
-//popup__form-input_value_job
-const jobInput = formElement.querySelector('.popup__form-input_value_job');
-
 //profile__title
 const profileTitle = document.querySelector('.profile__title');
 
 //profile__subtitle
 const profileSubTitle = document.querySelector('.profile__subtitle');
 
+//POPUP
+const popup = document.querySelector('.popup');
+
+
+
+//PLACE-POPUP
+const placePopup = document.querySelector('.place-popup');
+
+const placePopupTitle = placePopup.querySelector('.place-popup__title');
+
+//place-popup__container
+const placePopupForm = document.querySelector('.place-popup__container');
+
+//place-popup__form-input_value_name
+const placePopupName = placePopupForm.querySelector('.place-popup__form-input_value_name');
+
+//popup__form-input_value_link
+const placePopupLink = placePopupForm.querySelector('.place-popup__form-input_value_link');
+
+
+//PROFILE-POPUP
+const profilePopup = document.querySelector('.profile-popup');
+
+const profilePopupTitle = profilePopup.querySelector('.profile-popup__title');
+
+//popup__container
+const profilePopupForm = profilePopup.querySelector('.profile-popup__container');
+
+//popup__form-input_value_name
+const profilePopupName = profilePopupForm.querySelector('.profile-popup__form-input_value_name');
+
+//popup__form-input_value_job
+const profilePopupJob = profilePopupForm.querySelector('.profile-popup__form-input_value_job');
 
 //IMG POPUP
 const imgPopup = document.querySelector('.image-popup');
-
 
 //BUTTONS
 //profile__edit-button
@@ -58,134 +76,125 @@ const editBtn = document.querySelector('.profile__edit-button');
 const addBtn = document.querySelector('.profile__add-button');
 
 //popup__close-btn
-const popupCloseBtn = popup.querySelector('.popup__close-btn');
+const placePopupClose = placePopup.querySelector('.place-popup__close-btn');
+
+//popup__close-btn
+const profilePopupClose = profilePopup.querySelector('.profile-popup__close-btn');
 
 //image-popup__close-btn
-const imgPopupCloseBtn = imgPopup.querySelector('.image-popup__close-btn');
+const imgPopupClose = imgPopup.querySelector('.image-popup__close-btn');
 
 //SECTIONS
 //elements
 const sectionElements = document.querySelector('.elements');
 
+// Создание карточки для .element
+function addElement(item = {
+  name: 'Имя не задано',
+  link: 'https://cdn.pixabay.com/photo/2017/05/07/19/32/strawberry-2293337_960_720.jpg'
+}) {
 
-// Добавляю 6 карточек
-const CreateHTMLString = (item) => {
-  const markup = `
-    <article class="element animation-popup">
+  const templateElement = document.querySelector('.template-element').content;
 
-    <div class="element__top">
-    <img class="element__img" src="1" alt="1" onerror = "alert('Ошибка во время загрузки изображения');">
-    <button type="button" class="element__trash animation-elements"></button>
-        </div>
-    
-    <div class="element__bottom">
-        <h2 class="element__title">1</h2>
-        <button type="button" class="element__like animation-elements"></button>
-    </div>
-    </article>
- `;
+  // клонируем содержимое тега template
+  let itemElement = templateElement.querySelector('.element').cloneNode(true);
 
-  const tempContainer = document.createElement('article');
-  tempContainer.insertAdjacentHTML('afterbegin', markup);
+  const elementTitle = itemElement.querySelector('.element__title');
+  const elementImg = itemElement.querySelector('.element__img');
 
-  const elementItem = tempContainer.firstElementChild;
-  const elementTitle = elementItem.querySelector('.element__title');
-  const elementImg =  elementItem.querySelector('.element__img');
-
-  
-
-  elementTitle.textContent = item.name;
-  elementImg.alt = item.name;
   elementImg.src = item.link;
+  elementImg.alt = 'На фото: ' + item.name;
+  elementTitle.textContent = item.name;
+
+  //слушатели для карточек
 
   //ставлю слушатель на кнопку "лайк"
-  setLikeBtnListener(elementItem);
+  setLikeBtnListener(itemElement);
 
   //ставлю слушатель на кнопку "корзина"
-  setTrashBtnListener(elementItem);
+  setTrashBtnListener(itemElement);
 
   //ставлю слушатель на клик по картинке
-  setImgClickListener(elementItem, elementTitle, elementImg);
+  setImgClickListener(itemElement, elementTitle, elementImg);
 
+  return itemElement;
+}
 
-  return elementItem;
-};
+//Добавляю 6 карточек
+initialCards.forEach(item => sectionElements.append(addElement(item)));
 
-initialCards.forEach(element => sectionElements.append(CreateHTMLString(element)));
+//openPopup
+function openPopup(item) {
+  item.classList.add('popup_opened');
+}
+
+//closePopup
+function closePopup() {
+  profilePopup.classList.remove('popup_opened');
+  placePopup.classList.remove('popup_opened');
+  imgPopup.classList.remove('popup_opened');
+}
 
 //Нажатие кнопки редактирования профиля
-function editBtnClick() {
-  popup.classList.add('popup_opened');
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubTitle.textContent;
-  popup.classList.add('editBtn');
+function openProfilePopup() {
+  openPopup(profilePopup);
+  profilePopupName.value = profileTitle.textContent;
+  profilePopupJob.value = profileSubTitle.textContent;
 }
 
 //Нажатие кнопки добавления карточки
-function addBtnClick() {
-  popup.classList.add('popup_opened');
-  nameInput.value = '';
-  jobInput.value = '';
-  nameInput.placeholder = 'Название';
-  jobInput.placeholder = 'Ссылка на картинку';
-  popupTitle.textContent = 'Новое место';
-  popup.classList.add('addBtn');
+function openPlacePopup() {
+  openPopup(placePopup);
+  placePopupName.value = '';
+  placePopupLink.value = '';
+  placePopupName.placeholder = 'Название';
+  placePopupLink.placeholder = 'Ссылка на картинку';
 }
 
-//Нажатие на крестик попапа
-function ClosePopupBtnClick() {
-  popup.classList.remove('popup_opened');
-  popup.classList.remove('addBtn');
-  popup.classList.remove('editBtn');
-}
-
-//Нажатие на крестик попапа картинки
-function CloseImgPopupBtnClick() {
-  imgPopup.classList.remove('image-popup_opened');
-}
-
-//Отправка формы попапа
-function formSubmitHandler(evt) {
-
+//Отправка формы попапа place
+function submitPlaceHandler(evt) {
   // Отменяем переход по ссылке
   evt.preventDefault();
 
-  //отрабатываем добавление новых карточек
-  if (popup.classList[popup.classList.length - 1].includes('addBtn')) {
-    //готовим item для функции CreateHTMLString
-    const itemElement = {
-      name: nameInput.value,
-      link: jobInput.value
-    };
-
-    sectionElements.prepend(CreateHTMLString(itemElement));
-
-  }
-
-  //отрабатываем изменение профиля
-  else {
-    profileTitle.textContent = nameInput.value;
-    profileSubTitle.textContent = jobInput.value;
-  }
-
-  ClosePopupBtnClick();
+  const itemElement = {
+    name: placePopupName.value,
+    link: placePopupLink.value
+  };
+  sectionElements.prepend(addElement(itemElement));
+  closePopup();
 }
+
+//Отправка формы попапа profile
+function submitProfileHandler(evt) {
+  // Отменяем переход по ссылке
+  evt.preventDefault();
+  profileTitle.textContent = profilePopupName.value;
+  profileSubTitle.textContent = profilePopupJob.value;
+  closePopup();
+}
+
+
 
 //СЛУШАТЕЛИ
 //Отправка формы попапа
-formElement.addEventListener('submit', formSubmitHandler);
+
+placePopupForm.addEventListener('submit', submitPlaceHandler);
+
+profilePopupForm.addEventListener('submit', submitProfileHandler);
 
 //Нажатие кнопки редактирования профиля
-editBtn.addEventListener('click', editBtnClick);
+editBtn.addEventListener('click', openProfilePopup);
 
 //Нажатие кнопки добавления карточки
-addBtn.addEventListener('click', addBtnClick);
-
-//Нажатие на крестик попапа
-popupCloseBtn.addEventListener('click', ClosePopupBtnClick);
+addBtn.addEventListener('click', openPlacePopup);
 
 //Нажатие на крестик попапа с картинкой
-imgPopupCloseBtn.addEventListener('click', CloseImgPopupBtnClick);
+imgPopupClose.addEventListener('click', closePopup);
+
+//Нажатие на крестик попапа
+placePopupClose.addEventListener('click', closePopup);
+
+profilePopupClose.addEventListener('click', closePopup);
 
 
 //Нажатие на лайк
@@ -206,10 +215,9 @@ function setTrashBtnListener(elementItem) {
 
 //Нажатие на картинку
 function setImgClickListener(elementItem, elementTitle, elementImg) {
-  
-  elementImg.addEventListener('click', () => {
 
-    imgPopup.classList.add('image-popup_opened');
+  elementImg.addEventListener('click', () => {
+    openPopup(imgPopup);
     imgPopup.querySelector('.image-popup__picture').src = elementImg.src;
     imgPopup.querySelector('.image-popup__text').textContent = elementTitle.textContent;
 

@@ -1,0 +1,34 @@
+.place-popup__form-input {
+    font-family: inherit;
+    margin: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 7px;
+    padding-bottom: 8px;
+}
+
+.place-popup__form-input:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 505px) {
+    .place-popup__form-input {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    .place-popup__form-input {
+        min-width: 20px;
+        margin-right: 19px;
+        align-self: flex-end;
+        margin-bottom: 16px;
+    }
+}
