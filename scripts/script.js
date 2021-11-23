@@ -34,8 +34,6 @@ const profileSubTitle = document.querySelector('.profile__subtitle');
 //POPUP
 const popup = document.querySelector('.popup');
 
-
-
 //PLACE-POPUP
 const placePopup = document.querySelector('.place-popup');
 
@@ -49,7 +47,6 @@ const placePopupName = placePopupForm.querySelector('.place-popup__form-input_va
 
 //popup__form-input_value_link
 const placePopupLink = placePopupForm.querySelector('.place-popup__form-input_value_link');
-
 
 //PROFILE-POPUP
 const profilePopup = document.querySelector('.profile-popup');
@@ -74,6 +71,11 @@ const editBtn = document.querySelector('.profile__edit-button');
 
 //profile__add-button
 const addBtn = document.querySelector('.profile__add-button');
+
+//popup__close
+const popupClose = document.querySelectorAll('.popup__close');
+
+console.log('111' + popupClose);
 
 //popup__close-btn
 const placePopupClose = placePopup.querySelector('.place-popup__close-btn');
@@ -106,8 +108,6 @@ function addElement(item = {
   elementImg.alt = 'На фото: ' + item.name;
   elementTitle.textContent = item.name;
 
-  //слушатели для карточек
-
   //ставлю слушатель на кнопку "лайк"
   setLikeBtnListener(itemElement);
 
@@ -129,10 +129,8 @@ function openPopup(item) {
 }
 
 //closePopup
-function closePopup() {
-  profilePopup.classList.remove('popup_opened');
-  placePopup.classList.remove('popup_opened');
-  imgPopup.classList.remove('popup_opened');
+function closePopup(item) {
+  item.classList.remove('popup_opened');
 }
 
 //Нажатие кнопки редактирования профиля
@@ -155,13 +153,12 @@ function openPlacePopup() {
 function submitPlaceHandler(evt) {
   // Отменяем переход по ссылке
   evt.preventDefault();
-
   const itemElement = {
     name: placePopupName.value,
     link: placePopupLink.value
   };
   sectionElements.prepend(addElement(itemElement));
-  closePopup();
+  closePopup(placePopup);
 }
 
 //Отправка формы попапа profile
@@ -170,10 +167,8 @@ function submitProfileHandler(evt) {
   evt.preventDefault();
   profileTitle.textContent = profilePopupName.value;
   profileSubTitle.textContent = profilePopupJob.value;
-  closePopup();
+  closePopup(profilePopup);
 }
-
-
 
 //СЛУШАТЕЛИ
 //Отправка формы попапа
@@ -188,14 +183,16 @@ editBtn.addEventListener('click', openProfilePopup);
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', openPlacePopup);
 
-//Нажатие на крестик попапа с картинкой
-imgPopupClose.addEventListener('click', closePopup);
+//слушатели для крестиков
+popupClose.forEach(item => {
 
-//Нажатие на крестик попапа
-placePopupClose.addEventListener('click', closePopup);
-
-profilePopupClose.addEventListener('click', closePopup);
-
+  console.log('222');
+  console.log(item);
+  //вешаю слушатель на каждый item
+  item.addEventListener('click', () => {
+    closePopup(item.parentElement.parentElement);
+  })
+});
 
 //Нажатие на лайк
 function setLikeBtnListener(elementItem) {
@@ -219,7 +216,7 @@ function setImgClickListener(elementItem, elementTitle, elementImg) {
   elementImg.addEventListener('click', () => {
     openPopup(imgPopup);
     imgPopup.querySelector('.image-popup__picture').src = elementImg.src;
+    imgPopup.querySelector('.image-popup__picture').alt = elementTitle.textContent;
     imgPopup.querySelector('.image-popup__text').textContent = elementTitle.textContent;
-
   });
 }
