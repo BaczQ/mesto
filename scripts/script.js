@@ -75,8 +75,6 @@ const addBtn = document.querySelector('.profile__add-button');
 //popup__close
 const popupClose = document.querySelectorAll('.popup__close');
 
-console.log('111' + popupClose);
-
 //popup__close-btn
 const placePopupClose = placePopup.querySelector('.place-popup__close-btn');
 
@@ -185,9 +183,6 @@ addBtn.addEventListener('click', openPlacePopup);
 
 //слушатели для крестиков
 popupClose.forEach(item => {
-
-  console.log('222');
-  console.log(item);
   //вешаю слушатель на каждый item
   item.addEventListener('click', () => {
     closePopup(item.parentElement.parentElement);
