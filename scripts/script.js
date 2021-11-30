@@ -271,21 +271,11 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-
-
-
-
-
-
 // вешаем слушатели на submit и input
 function setEventListeners() {
 
-  
-
   toggleButtonState(formProfile, buttonProfile);
   toggleButtonState(formPlace, buttonPlace); //возможно надо удалить
-
-
 
   //вешаем слушатель на каждый input для Profile
   inputsProfile.forEach((inputElement) => {
@@ -304,8 +294,6 @@ function setEventListeners() {
       toggleButtonState(formPlace, buttonPlace);
     });
   });
-
-
 
   //отменяем стандартный submit
   noSubmitDefault(formProfile);
@@ -347,13 +335,10 @@ function hideInputError(formElement, inputElement) {
 
 //Показываем сообщение об ошибке
 function showInputError(formElement, inputElement, errorMessage) {
-  console.log(4);
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
-  console.log(5);
   errorElement.textContent = errorMessage;
 }
 
 
 setEventListeners();
 
-console.log(1);
