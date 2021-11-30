@@ -25,19 +25,6 @@ const initialCards = [{
   }
 ];
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
-//enableValidation(validationData); 
-
-
-
 //profile__title
 const profileTitle = document.querySelector('.profile__title');
 
@@ -88,15 +75,10 @@ const addBtn = document.querySelector('.profile__add-button');
 //popup__close
 const popupClose = document.querySelectorAll('.popup__close');
 
-
 //SECTIONS
 //elements
 const sectionElements = document.querySelector('.elements');
 
-
-
-
-// 
 //Формы
 const formProfile = document.querySelector('.profile-popup__form');
 const formPlace = document.querySelector('.place-popup__form');
@@ -108,8 +90,6 @@ const inputsPlace = Array.from(formPlace.querySelectorAll('.place-popup__form-in
 //Кнопки
 const buttonProfile = formProfile.querySelector('.profile-popup__button');
 const buttonPlace = formPlace.querySelector('.place-popup__button');
-
-
 
 // Создание карточки для .element
 function addElement(item = {
@@ -180,8 +160,7 @@ function submitPlaceHandler(evt) {
   };
   sectionElements.prepend(addElement(itemElement));
   closePopup(placePopup);
-  
-}
+  }
 
 //Отправка формы попапа profile
 function submitProfileHandler(evt) {
@@ -219,18 +198,8 @@ popupClose.forEach(item => {
 
       closePopup(item.parentElement.parentElement);
     }
-
-
   });
-
-
-
 });
-
-
-
-
-
 
 //Нажатие на лайк
 function setLikeBtnListener(elementItem) {
