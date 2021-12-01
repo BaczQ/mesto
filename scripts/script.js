@@ -37,6 +37,7 @@ const popup = document.querySelector('.popup');
 //PLACE-POPUP
 const placePopup = document.querySelector('.place-popup');
 
+//place-popup__title
 const placePopupTitle = placePopup.querySelector('.place-popup__title');
 
 //place-popup__container
@@ -79,17 +80,11 @@ const popupClose = document.querySelectorAll('.popup__close');
 //elements
 const sectionElements = document.querySelector('.elements');
 
-//Формы
-const formProfile = document.querySelector('.profile-popup__form');
-const formPlace = document.querySelector('.place-popup__form');
 
-//Инпуты
-const inputsProfile = Array.from(formProfile.querySelectorAll('.profile-popup__form-input'));
-const inputsPlace = Array.from(formPlace.querySelectorAll('.place-popup__form-input'));
 
-//Кнопки
-const buttonProfile = formProfile.querySelector('.profile-popup__button');
-const buttonPlace = formPlace.querySelector('.place-popup__button');
+
+
+
 
 // Создание карточки для .element
 function addElement(item = {
@@ -143,24 +138,24 @@ function openProfilePopup() {
 
 //Нажатие кнопки добавления карточки
 function openPlacePopup() {
-  openPopup(placePopup);
+  openPopup(placePopup); //открываем попап
   placePopupName.value = '';
   placePopupLink.value = '';
   placePopupName.placeholder = 'Название';
   placePopupLink.placeholder = 'Ссылка на картинку';
-  toggleButtonState(formPlace, buttonPlace);
+  placePopup.querySelectorAll("button")[1].classList.add('popup__button_disabled');
 }
 
 //Отправка формы попапа place
 function submitPlaceHandler(evt) {
- 
+
   const itemElement = {
     name: placePopupName.value,
     link: placePopupLink.value
   };
   sectionElements.prepend(addElement(itemElement));
   closePopup(placePopup);
-  }
+}
 
 //Отправка формы попапа profile
 function submitProfileHandler(evt) {
@@ -228,8 +223,6 @@ function setImgClickListener(elementItem, elementTitle, elementImg) {
   });
 }
 
-
-
 //Закрываем попапы по нажатию ESC
 document.addEventListener('keydown', function (event) {
   const key = event.key; // const {key} = event; in ES6+
@@ -239,75 +232,3 @@ document.addEventListener('keydown', function (event) {
     closePopup(imgPopup);
   }
 });
-
-// вешаем слушатели на submit и input
-function setEventListeners() {
-
-  toggleButtonState(formProfile, buttonProfile);
-  toggleButtonState(formPlace, buttonPlace); //возможно надо удалить
-
-  //вешаем слушатель на каждый input для Profile
-  inputsProfile.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      //Проверяем Input на валидность
-      checkInputValidity(formProfile, inputElement);
-      toggleButtonState(formProfile, buttonProfile);
-    });
-  });
-
-  //вешаем слушатель на каждый input для Place
-  inputsPlace.forEach((inputElement) => {
-    inputElement.addEventListener('input', () => {
-      //Проверяем Input на валидность
-      checkInputValidity(formPlace, inputElement);
-      toggleButtonState(formPlace, buttonPlace);
-    });
-  });
-
-  //отменяем стандартный submit
-  noSubmitDefault(formProfile);
-  noSubmitDefault(formPlace);
-
-}
-
-
-//Проверяем Input на валидность
-const checkInputValidity = (formElement, inputElement) => {
-
-  if (inputElement.validity.valid) {
-    hideInputError(formElement, inputElement);
-  } else {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  }
-}
-
-//Активировать/Деактивировать кнопки
-function toggleButtonState(formElement, buttonElement) {
-  const isFormValid = formElement.checkValidity();
-  buttonElement.classList.toggle('popup__button_disabled', !isFormValid);
-  buttonElement.disabled = !isFormValid;
-}
-
-
-//отменяем стандартный submit
-function noSubmitDefault(formElement) {
-  formElement.addEventListener('submit', e => {
-    e.preventDefault();
-  });
-}
-
-//прячем сообщение об ошибке
-function hideInputError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
-  errorElement.textContent = "\u00A0";
-}
-
-//Показываем сообщение об ошибке
-function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
-  errorElement.textContent = errorMessage;
-}
-
-
-setEventListeners();
-
