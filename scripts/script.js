@@ -37,6 +37,7 @@ const popup = document.querySelector('.popup');
 //PLACE-POPUP
 const placePopup = document.querySelector('.place-popup');
 
+//place-popup__title
 const placePopupTitle = placePopup.querySelector('.place-popup__title');
 
 //place-popup__container
@@ -75,18 +76,15 @@ const addBtn = document.querySelector('.profile__add-button');
 //popup__close
 const popupClose = document.querySelectorAll('.popup__close');
 
-//popup__close-btn
-const placePopupClose = placePopup.querySelector('.place-popup__close-btn');
-
-//popup__close-btn
-const profilePopupClose = profilePopup.querySelector('.profile-popup__close-btn');
-
-//image-popup__close-btn
-const imgPopupClose = imgPopup.querySelector('.image-popup__close-btn');
-
 //SECTIONS
 //elements
 const sectionElements = document.querySelector('.elements');
+
+
+
+
+
+
 
 // Создание карточки для .element
 function addElement(item = {
@@ -140,17 +138,17 @@ function openProfilePopup() {
 
 //Нажатие кнопки добавления карточки
 function openPlacePopup() {
-  openPopup(placePopup);
+  openPopup(placePopup); //открываем попап
   placePopupName.value = '';
   placePopupLink.value = '';
   placePopupName.placeholder = 'Название';
   placePopupLink.placeholder = 'Ссылка на картинку';
+  placePopup.querySelectorAll("button")[1].classList.add('popup__button_disabled');
 }
 
 //Отправка формы попапа place
 function submitPlaceHandler(evt) {
-  // Отменяем переход по ссылке
-  evt.preventDefault();
+
   const itemElement = {
     name: placePopupName.value,
     link: placePopupLink.value
@@ -162,7 +160,7 @@ function submitPlaceHandler(evt) {
 //Отправка формы попапа profile
 function submitProfileHandler(evt) {
   // Отменяем переход по ссылке
-  evt.preventDefault();
+  //evt.preventDefault();
   profileTitle.textContent = profilePopupName.value;
   profileSubTitle.textContent = profilePopupJob.value;
   closePopup(profilePopup);
@@ -186,7 +184,16 @@ popupClose.forEach(item => {
   //вешаю слушатель на каждый item
   item.addEventListener('click', () => {
     closePopup(item.parentElement.parentElement);
-  })
+  });
+
+  //Закрываем по клику на попапе
+  item.parentElement.parentElement.addEventListener('click', (evt) => {
+
+    if (String(evt.target.className).startsWith('popup')) {
+
+      closePopup(item.parentElement.parentElement);
+    }
+  });
 });
 
 //Нажатие на лайк
@@ -215,3 +222,13 @@ function setImgClickListener(elementItem, elementTitle, elementImg) {
     imgPopup.querySelector('.image-popup__text').textContent = elementTitle.textContent;
   });
 }
+
+//Закрываем попапы по нажатию ESC
+document.addEventListener('keydown', function (event) {
+  const key = event.key; // const {key} = event; in ES6+
+  if (key === "Escape") {
+    closePopup(placePopup);
+    closePopup(profilePopup);
+    closePopup(imgPopup);
+  }
+});
