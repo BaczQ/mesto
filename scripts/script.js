@@ -134,6 +134,7 @@ function openProfilePopup() {
   openPopup(profilePopup);
   profilePopupName.value = profileTitle.textContent;
   profilePopupJob.value = profileSubTitle.textContent;
+  placePopup.querySelectorAll("button")[1].classList.remove('popup__button_disabled');
 }
 
 //Нажатие кнопки добавления карточки
