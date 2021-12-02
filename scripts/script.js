@@ -80,6 +80,10 @@ const popupClose = document.querySelectorAll('.popup__close');
 //elements
 const sectionElements = document.querySelector('.elements');
 
+//Все попапы
+const popups = document.querySelectorAll('.popup')
+
+
 
 
 
@@ -122,12 +126,27 @@ initialCards.forEach(item => sectionElements.append(addElement(item)));
 //openPopup
 function openPopup(item) {
   item.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape);
 }
 
 //closePopup
 function closePopup(item) {
   item.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
 }
+
+//Закрывем попап по нажатию клавиши Esc
+function closeByEscape(event) {
+  const openedPopup = document.querySelector('.popup_opened');
+  const key = event.key; // const {key} = event; in ES6+
+  if (key === "Escape") {
+    closePopup(openedPopup);
+  }
+}
+
+
+
+
 
 //Нажатие кнопки редактирования профиля
 function openProfilePopup() {
@@ -180,20 +199,15 @@ editBtn.addEventListener('click', openProfilePopup);
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', openPlacePopup);
 
-//слушатели для крестиков
-popupClose.forEach(item => {
-  //вешаю слушатель на каждый item
-  item.addEventListener('click', () => {
-    closePopup(item.parentElement.parentElement);
-  });
-
-  //Закрываем по клику на попапе
-  item.parentElement.parentElement.addEventListener('click', (evt) => {
-
-    if (String(evt.target.className).startsWith('popup')) {
-
-      closePopup(item.parentElement.parentElement);
-    }
+//слушатели для нажатия крестиков и для клика на попапе
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
+      if (evt.target.classList.contains('popup__close')) {
+        closePopup(popup);
+      }
   });
 });
 
@@ -221,15 +235,7 @@ function setImgClickListener(elementItem, elementTitle, elementImg) {
     imgPopup.querySelector('.image-popup__picture').src = elementImg.src;
     imgPopup.querySelector('.image-popup__picture').alt = elementTitle.textContent;
     imgPopup.querySelector('.image-popup__text').textContent = elementTitle.textContent;
+
+
   });
 }
-
-//Закрываем попапы по нажатию ESC
-document.addEventListener('keydown', function (event) {
-  const key = event.key; // const {key} = event; in ES6+
-  if (key === "Escape") {
-    closePopup(placePopup);
-    closePopup(profilePopup);
-    closePopup(imgPopup);
-  }
-});
