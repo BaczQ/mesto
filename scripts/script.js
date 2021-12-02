@@ -122,12 +122,24 @@ initialCards.forEach(item => sectionElements.append(addElement(item)));
 //openPopup
 function openPopup(item) {
   item.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape);
 }
 
 //closePopup
 function closePopup(item) {
   item.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
 }
+
+//Закрывем попап по нажатию клавиши Esc
+function closeByEscape(event) {
+  const openedPopup = document.querySelector('.popup_opened');
+  const key = event.key; // const {key} = event; in ES6+
+  if (key === "Escape") {
+    closePopup(openedPopup);
+  }
+}
+
 
 //Нажатие кнопки редактирования профиля
 function openProfilePopup() {
@@ -221,15 +233,7 @@ function setImgClickListener(elementItem, elementTitle, elementImg) {
     imgPopup.querySelector('.image-popup__picture').src = elementImg.src;
     imgPopup.querySelector('.image-popup__picture').alt = elementTitle.textContent;
     imgPopup.querySelector('.image-popup__text').textContent = elementTitle.textContent;
+
+
   });
 }
-
-//Закрываем попапы по нажатию ESC
-document.addEventListener('keydown', function (event) {
-  const key = event.key; // const {key} = event; in ES6+
-  if (key === "Escape") {
-    closePopup(placePopup);
-    closePopup(profilePopup);
-    closePopup(imgPopup);
-  }
-});
