@@ -80,6 +80,10 @@ const popupClose = document.querySelectorAll('.popup__close');
 //elements
 const sectionElements = document.querySelector('.elements');
 
+//Все попапы
+const popups = document.querySelectorAll('.popup')
+
+
 
 
 
@@ -141,6 +145,9 @@ function closeByEscape(event) {
 }
 
 
+
+
+
 //Нажатие кнопки редактирования профиля
 function openProfilePopup() {
   openPopup(profilePopup);
@@ -192,20 +199,15 @@ editBtn.addEventListener('click', openProfilePopup);
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', openPlacePopup);
 
-//слушатели для крестиков
-popupClose.forEach(item => {
-  //вешаю слушатель на каждый item
-  item.addEventListener('click', () => {
-    closePopup(item.parentElement.parentElement);
-  });
-
-  //Закрываем по клику на попапе
-  item.parentElement.parentElement.addEventListener('click', (evt) => {
-
-    if (String(evt.target.className).startsWith('popup')) {
-
-      closePopup(item.parentElement.parentElement);
-    }
+//слушатели для нажатия крестиков и для клика на попапе
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
+      if (evt.target.classList.contains('popup__close')) {
+        closePopup(popup);
+      }
   });
 });
 
