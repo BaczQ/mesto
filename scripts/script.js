@@ -102,8 +102,7 @@ function addElement(item = {
   const templateElement = document.querySelector('.template-element').content;
 
   // клонируем содержимое тега template
-  let itemElement = templateElement.querySelector('.element').cloneNode(true);
-
+  const itemElement = templateElement.querySelector('.element').cloneNode(true);
   const elementTitle = itemElement.querySelector('.element__title');
   const elementImg = itemElement.querySelector('.element__img');
 
@@ -140,9 +139,9 @@ function closePopup(item) {
 
 //Закрывем попап по нажатию клавиши Esc
 function closeByEscape(event) {
-  const openedPopup = document.querySelector('.popup_opened');
   const key = event.key; // const {key} = event; in ES6+
   if (key === "Escape") {
+    const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
   }
 }

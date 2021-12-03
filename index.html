@@ -48,18 +48,18 @@
         <div class="profile-popup__container animation-popup">
             <button class="popup__close" type="button"></button>
             <h2 class="profile-popup__title">Редактировать профиль</h2>
-            <form name="profile-popup-form" class="profile-popup__form">
-                <input class="profile-popup__form-input profile-popup__form-input_value_name" type="text" value=""
-                    name="submitName" minlength="2" maxlength="40" required />
+            <form name="profile-popup-form" class="popup__form profile-popup__form">
+                <input class="popup__input profile-popup__form-input profile-popup__form-input_value_name" type="text"
+                    value="" name="submitName" minlength="2" maxlength="40" required />
 
                 <span class="popup__error" id="submitName-error">&nbsp;</span>
 
-                <input class="profile-popup__form-input profile-popup__form-input_value_job" type="text" value=""
-                    name="submitJob" minlength="2" maxlength="200" required />
+                <input class="popup__input profile-popup__form-input profile-popup__form-input_value_job" type="text"
+                    value="" name="submitJob" minlength="2" maxlength="200" required />
 
                 <span class="popup__error" id="submitJob-error">&nbsp;</span>
 
-                <button type="submit" class="profile-popup__button animation-elements">Сохранить</button>
+                <button type="submit" class="popup__button profile-popup__button animation-elements">Сохранить</button>
             </form>
         </div>
     </div>
@@ -68,19 +68,19 @@
         <div class="place-popup__container animation-popup">
             <button class="popup__close" type="button"></button>
             <h2 class="place-popup__title">Новое место</h2>
-            <form name="place-popup-form" class="place-popup__form">
+            <form name="place-popup-form" class="popup__form place-popup__form">
 
-                <input class="place-popup__form-input place-popup__form-input_value_name" type="text" value=""
-                    name="submitPlace" required minlength="2" maxlength="30" placeholder = "Название"/>
+                <input class="popup__input place-popup__form-input place-popup__form-input_value_name" type="text"
+                    value="" name="submitPlace" required minlength="2" maxlength="30" placeholder="Название" />
 
                 <span class="popup__error" id="submitPlace-error">&nbsp;</span>
 
-                <input class="place-popup__form-input place-popup__form-input_value_link" type="url" value=""
-                    name="submitLink" placeholder = "Ссылка на картинку" required />
+                <input class="popup__input place-popup__form-input place-popup__form-input_value_link" type="url"
+                    value="" name="submitLink" placeholder="Ссылка на картинку" required />
 
                 <span class="popup__error" id="submitLink-error">&nbsp;</span>
 
-                <button type="submit" class="place-popup__button animation-elements">Сохранить</button>
+                <button type="submit" class="popup__button place-popup__button animation-elements">Сохранить</button>
             </form>
         </div>
     </div>
@@ -113,7 +113,5 @@
     <script src="./scripts/script.js"></script>
     <script src="./scripts/validate.js"></script>
 
-
 </body>
-
 </html>
