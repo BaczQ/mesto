@@ -73,8 +73,11 @@ const editBtn = document.querySelector('.profile__edit-button');
 //profile__add-button
 const addBtn = document.querySelector('.profile__add-button');
 
-//popup__close
-const popupClose = document.querySelectorAll('.popup__close');
+//.place-popup__button
+const placePopupBtn = document.querySelector('.place-popup__button');
+
+//.profile-popup__button
+const profilePopupBtn = document.querySelector('.profile-popup__button');
 
 //SECTIONS
 //elements
@@ -153,7 +156,8 @@ function openProfilePopup() {
   openPopup(profilePopup);
   profilePopupName.value = profileTitle.textContent;
   profilePopupJob.value = profileSubTitle.textContent;
-  placePopup.querySelectorAll("button")[1].classList.remove('popup__button_disabled');
+  profilePopupBtn.classList.remove('popup__button_disabled');
+  
 }
 
 //Нажатие кнопки добавления карточки
@@ -161,9 +165,8 @@ function openPlacePopup() {
   openPopup(placePopup); //открываем попап
   placePopupName.value = '';
   placePopupLink.value = '';
-  placePopupName.placeholder = 'Название';
-  placePopupLink.placeholder = 'Ссылка на картинку';
-  placePopup.querySelectorAll("button")[1].classList.add('popup__button_disabled');
+  placePopupBtn.classList.add('popup__button_disabled');
+  
 }
 
 //Отправка формы попапа place
