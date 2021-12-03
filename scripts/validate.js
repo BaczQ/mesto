@@ -1,59 +1,44 @@
 const validationConfig = {
-    formProfile: '.profile-popup__form',
-    formPlace: '.place-popup__form',
-    inputsProfile: '.profile-popup__form-input',
-    inputsPlace: '.place-popup__form-input',
-    buttonProfile: '.profile-popup__button',
-    buttonPlace: '.place-popup__button',
-    buttonDisabled: 'popup__button_disabled'
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible'
 };
 
-function enableValidation(validationConfig) {
+const setEventListeners = (formElement, {
+    inputSelector,
+    submitButtonSelector,
+    inactiveButtonClass,
+    ...rest
+}) => {
+    const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+    const buttonElement = formElement.querySelector(submitButtonSelector);
 
-    //ОБЪЯВЛЯЮ КОНСТАНТЫ
-    //Формы
-    const formProfile = document.querySelector(validationConfig.formProfile);
-    const formPlace = document.querySelector(validationConfig.formPlace);
-
-    //Инпуты
-    const inputsProfile = Array.from(formProfile.querySelectorAll(validationConfig.inputsProfile));
-    const inputsPlace = Array.from(formPlace.querySelectorAll(validationConfig.inputsPlace));
-
-    //Кнопки
-    const buttonProfile = formProfile.querySelector(validationConfig.buttonProfile);
-    const buttonPlace = formPlace.querySelector(validationConfig.buttonPlace);
-
-    //Другое
-    const classBtnDissabled = validationConfig.buttonDisabled;
-
-    //Меняем стиль кнопки попапов в зависимости от валидности
-    toggleButtonState(formProfile, buttonProfile, classBtnDissabled);
-    toggleButtonState(formPlace, buttonPlace, classBtnDissabled);
-
-    //Вешаем слушатель на каждый input для Profile
-    inputsProfile.forEach((inputElement) => {
+    inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
-            //Проверяем Input на валидность
-            checkInputValidity(formProfile, inputElement);
-            toggleButtonState(formProfile, buttonProfile, classBtnDissabled);
+            checkInputValidity(formElement, inputElement, rest);
+            toggleButtonState(formElement, buttonElement, inactiveButtonClass);
         });
     });
+};
 
-    //вешаем слушатель на каждый input для Place
-    inputsPlace.forEach((inputElement) => {
-        inputElement.addEventListener('input', () => {
+const enableValidation = ({
+    formSelector,
+    ...rest
+}) => {
+    const getFormList = Array.from(document.querySelectorAll(formSelector));
+    getFormList.forEach((formElement) => {
+        //отменяем стандартные submit'ы
+        noSubmitDefault(formElement);
 
-            //Проверяем Input на валидность
-            checkInputValidity(formPlace, inputElement);
-            toggleButtonState(formPlace, buttonPlace, classBtnDissabled);
+        formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
         });
+        setEventListeners(formElement, rest);
     });
-
-    //отменяем стандартные submit'ы
-    noSubmitDefault(formProfile);
-    noSubmitDefault(formPlace);
-}
-
+};
 
 //Меняем стиль кнопки попапов
 function toggleButtonState(formElement, buttonElement, classBtnDissabled) {
@@ -69,7 +54,6 @@ function checkInputValidity(formElement, inputElement) {
     } else {
         showInputError(formElement, inputElement, inputElement.validationMessage);
     }
-
 }
 
 //прячем сообщение об ошибке
