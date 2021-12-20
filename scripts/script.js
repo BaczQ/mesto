@@ -1,45 +1,16 @@
 import {
-  FormValidator
-} from './FormValidator.js';
-import {
   Card
 } from './Card.js';
 import {
-  openPopup,
   closePopup,
-  closeByEscape,
   openProfilePopup,
   submitProfileHandler,
   openPlacePopup,
   submitPlaceHandler
 } from './functions.js';
-
-// Карточки
-const initialCards = [{
-    name: 'о. Бора-Бора',
-    link: './images/element/__img/bora-bora.jpg'
-  },
-  {
-    name: 'о. Ява',
-    link: './images/element/__img/jawa.jpg'
-  },
-  {
-    name: 'о. Закинтос',
-    link: './images/element/__img/zakintos.jpg'
-  },
-  {
-    name: 'город Венеция',
-    link: './images/element/__img/venice.jpg'
-  },
-  {
-    name: 'о. Фуэртевентура',
-    link: './images/element/__img/fuer.jpg'
-  },
-  {
-    name: 'о. Корсика',
-    link: './images/element/__img/korsika.jpg'
-  }
-];
+import {
+  initialCards
+} from './dataCards.js';
 
 //PROFILE
 const editBtn = document.querySelector('.profile__edit-button');
@@ -68,8 +39,6 @@ addBtn.addEventListener('click', openPlacePopup);
 //Отправка формы попапа
 placePopupForm.addEventListener('submit', submitPlaceHandler);
 
-
-
 //слушатели для нажатия крестиков и для клика на попапе
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
@@ -82,39 +51,14 @@ popups.forEach((popup) => {
   });
 });
 
-//ВЫПОЛНЕНИЕ СЛУШАТЕЛЕЙ
-
-
-
-
 //ВЫВОЖУ КАРТОЧКИ
 function renderCards(initialCards) {
   let i = 1;
   initialCards.forEach(item => {
-    window["card" + i] = new Card(item.name, item.link, '.template-element', '.elements');
-    window["card" + i++].renderCard();
+    const card = new Card(item.name, item.link, '.template-element', '.elements');
+    card.cardView();
   });
 }
 
-
-
-const validationConfig = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
 //Выводим карточки
 renderCards(initialCards);
-
-//Создаём объекты для валидации форм
-const form1 = new FormValidator(validationConfig, '.profile-popup__form');
-//Валидируем форму
-form1.enableValidation();
-
-//Создаём объекты для валидации форм
-const form2 = new FormValidator(validationConfig, '.place-popup__form');
-//Валидируем форму
-form2.enableValidation();
