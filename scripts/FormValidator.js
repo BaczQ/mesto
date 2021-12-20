@@ -40,20 +40,22 @@ export class FormValidator {
         this._errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
 
         if (inputElement.validity.valid) {
-            this._hideInputError(); //прячем сообщение об ошибке
+            this._hideInputError(inputElement); //прячем сообщение об ошибке
         } else {
             this._showInputError(inputElement); //Показываем сообщение об ошибке
         }
     }
 
     //прячем сообщение об ошибке
-    _hideInputError() {
+    _hideInputError(inputElement) {
         this._errorElement.textContent = "\u00A0";
+        inputElement.classList.remove("popup__input_error");
     }
 
     //Показываем сообщение об ошибке
     _showInputError(inputElement) {
         this._errorElement.textContent = inputElement.validationMessage;
+        inputElement.classList.add("popup__input_error");
     }
 
     //Меняем стиль кнопки попапов
