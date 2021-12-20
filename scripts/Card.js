@@ -1,27 +1,27 @@
 import {
     openPopup,
-    closePopup,
-    closeByEscape,
-    openProfilePopup,
-    submitProfileHandler,
-    openPlacePopup,
-    submitPlaceHandler
+    imgPopupPicture,
+    imgPopupText
+
 } from './functions.js';
 
 export class Card {
     constructor(cardTitle, cardLink, cardSelector, section, ...args) {
         this._cardTitle = cardTitle;
         this._cardLink = cardLink;
-        this._templateCard = document.querySelector(cardSelector).content; //Селектор шаблона
+        this._templateCard = document.querySelector(cardSelector).content.querySelector('.element'); //Селектор шаблона
         this._section = document.querySelector(section); //Куда вставляем шаблон
         this._imgPopup = document.querySelector('.image-popup');
     }
 
     //отрисовываем карточку
-    _cardView() {
+    cardView() {
         this._templateElement = this._templateCard.cloneNode(true);
         this._templateElement.querySelector('.element__title').textContent = this._cardTitle;
-        this._templateElement.querySelector('.element__img').src = this._cardLink;
+        this._elementImg = this._templateElement.querySelector('.element__img');
+        this._elementImg.src = this._cardLink;
+        this._setListeners(); //вешаем слушатели
+        this._section.prepend(this._templateElement); //добавляем в DOM
     }
 
     //добавляем слушатели
@@ -46,8 +46,8 @@ export class Card {
 
     //ставлю слушатель на клик по картинке
     _setImgClickListener() {
-        this.elementImg = this._templateElement.querySelector('.element__img');
-        this.elementImg.addEventListener('click', () => this._imgClick());
+        
+        this._elementImg.addEventListener('click', () => this._imgClick());
     }
 
     //НАЖАТИЯ
@@ -58,7 +58,7 @@ export class Card {
 
     //Нажатие на корзину
     _trashClick(item) {
-        item.parentElement.parentElement.remove();
+        this._templateElement.remove();
     }
 
     //нажатие на картинку
@@ -69,9 +69,5 @@ export class Card {
         this._imgPopup.querySelector('.image-popup__text').textContent = this._cardTitle;
     }
 
-    renderCard() {
-        this._cardView(); //отрисовываем карточку
-        this._setListeners(); //вешаем слушатели
-        this._section.prepend(this._templateElement); //добавляем в DOM
-    }
+ 
 }

@@ -1,13 +1,3 @@
-import {
-    openPopup,
-    closePopup,
-    closeByEscape,
-    openProfilePopup,
-    submitProfileHandler,
-    openPlacePopup,
-    submitPlaceHandler
-} from './functions.js';
-
 export class FormValidator {
     constructor(config, formElement) {
         this._config = config;
@@ -22,6 +12,12 @@ export class FormValidator {
         this._setListeners(); //устанавливаем слушатели
     }
 
+    setError(){ //включаем/выключаем ошибки
+        this._inputList.forEach((inputElement) => {
+                this._validityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
+        });
+    }
+
     //отменяем стандартные submit'ы
     _noSubmitDefault() {
         this._formElement.addEventListener('submit', e => {
@@ -33,25 +29,26 @@ export class FormValidator {
     _setListeners() {
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
-                this._ValidityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
-                this._toggleButtonState(inputElement); //Меняем стиль кнопки попапов
+                this._validityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
+                this.toggleButtonState(inputElement); //Меняем стиль кнопки попапов
             });
         });
     }
 
+
     //Проверяем input, чтобы вывести/убрать сообщение об ошибке
-    _ValidityState(inputElement) {
+    _validityState(inputElement) {
         this._errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
 
         if (inputElement.validity.valid) {
-            this._hideInputError(inputElement); //прячем сообщение об ошибке
+            this._hideInputError(); //прячем сообщение об ошибке
         } else {
             this._showInputError(inputElement); //Показываем сообщение об ошибке
         }
     }
 
     //прячем сообщение об ошибке
-    _hideInputError(inputElement) {
+    _hideInputError() {
         this._errorElement.textContent = "\u00A0";
     }
 
@@ -61,7 +58,7 @@ export class FormValidator {
     }
 
     //Меняем стиль кнопки попапов
-    _toggleButtonState() {
+    toggleButtonState() {
         const isFormValid = this._formElement.checkValidity();
         this._buttonElement.classList.toggle(this._inactiveButtonClass, !isFormValid);
         this._buttonElement.disabled = !isFormValid;
