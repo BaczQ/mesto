@@ -1,5 +1,7 @@
 import {
-    openPopup
+    openPopup,
+    imgPopupPicture,
+    imgPopupText
 } from './functions.js';
 
 export class Card {
@@ -17,6 +19,7 @@ export class Card {
         this._templateElement.querySelector('.element__title').textContent = this._cardTitle;
         this._elementImg = this._templateElement.querySelector('.element__img');
         this._elementImg.src = this._cardLink;
+        this._elementImg.alt = this._cardTitle;
         this._setListeners(); //вешаем слушатели
         this._section.prepend(this._templateElement); //добавляем в DOM
     }
@@ -43,7 +46,7 @@ export class Card {
 
     //ставлю слушатель на клик по картинке
     _setImgClickListener() {
-        
+
         this._elementImg.addEventListener('click', () => this._imgClick());
     }
 
@@ -61,8 +64,8 @@ export class Card {
     //нажатие на картинку
     _imgClick() {
         openPopup(this._imgPopup);
-        this._imgPopup.querySelector('.image-popup__picture').src = this._cardLink;
-        this._imgPopup.querySelector('.image-popup__picture').alt = this._cardTitle;
-        this._imgPopup.querySelector('.image-popup__text').textContent = this._cardTitle;
+        imgPopupPicture.src = this._cardLink;
+        imgPopupPicture.alt = this._cardTitle;
+        imgPopupText.textContent = this._cardTitle;
     }
 }
