@@ -29,7 +29,6 @@ const validationConfig = {
   errorClass: 'popup__error_visible'
 };
 
-
 //Создаём объекты для валидации форм
 const formProfile = new FormValidator(validationConfig, '.profile-popup__form');
 //Валидируем форму
@@ -39,9 +38,6 @@ formProfile.enableValidation();
 const formPlace = new FormValidator(validationConfig, '.place-popup__form');
 //Валидируем форму
 formPlace.enableValidation();
-
-
-
 
 //ВЫПОЛНЕНИЕ СЛУШАТЕЛЕЙ
 //Закрывем попап по нажатию клавиши Esc
@@ -57,7 +53,7 @@ export function closeByEscape(event) {
 export function openPopup(item) {
   item.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-  }
+}
 
 //closePopup
 export function closePopup(item) {
@@ -72,7 +68,7 @@ export function openProfilePopup() {
   openPopup(profilePopup);
   formProfile.toggleButtonState();
   formProfile.setError();
-  }
+}
 
 //Отправка формы попапа profile
 export function submitProfileHandler(evt) {

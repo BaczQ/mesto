@@ -35,7 +35,6 @@ export class FormValidator {
         });
     }
 
-
     //Проверяем input, чтобы вывести/убрать сообщение об ошибке
     _validityState(inputElement) {
         this._errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);

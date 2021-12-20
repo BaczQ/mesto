@@ -1,7 +1,4 @@
 import {
-  FormValidator
-} from './FormValidator.js';
-import {
   Card
 } from './Card.js';
 import {
@@ -14,7 +11,6 @@ import {
 import {
   initialCards
 } from './dataCards.js';
-
 
 //PROFILE
 const editBtn = document.querySelector('.profile__edit-button');
@@ -64,9 +60,5 @@ function renderCards(initialCards) {
   });
 }
 
-
-
-
 //Выводим карточки
 renderCards(initialCards);
-

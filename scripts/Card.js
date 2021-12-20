@@ -1,8 +1,5 @@
 import {
-    openPopup,
-    imgPopupPicture,
-    imgPopupText
-
+    openPopup
 } from './functions.js';
 
 export class Card {
@@ -68,6 +65,4 @@ export class Card {
         this._imgPopup.querySelector('.image-popup__picture').alt = this._cardTitle;
         this._imgPopup.querySelector('.image-popup__text').textContent = this._cardTitle;
     }
-
- 
 }
