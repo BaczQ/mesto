@@ -5,6 +5,8 @@ export class FormValidator {
         this._inputList = Array.from(this._formElement.querySelectorAll(config.inputSelector));
         this._buttonElement = this._formElement.querySelector(config.submitButtonSelector);
         this._inactiveButtonClass = config.inactiveButtonClass;
+        this._errorClass = config.errorClass;
+
     }
 
     enableValidation() {
@@ -12,9 +14,19 @@ export class FormValidator {
         this._setListeners(); //устанавливаем слушатели
     }
 
-    setError(){ //включаем/выключаем ошибки
+    setError() { //включаем/выключаем ошибки
         this._inputList.forEach((inputElement) => {
-                this._validityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
+            this._validityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
+        });
+    }
+
+    clearError() {
+        this._errorList = Array.from(this._formElement.querySelectorAll(this._errorClass));
+        this._errorList.forEach((errorElement) => {
+            this._removeErrorText(errorElement);
+        });
+        this._inputList.forEach((inputElement) => {
+            this._removeErrorInputClass(inputElement);
         });
     }
 
@@ -46,9 +58,19 @@ export class FormValidator {
         }
     }
 
+
+
     //прячем сообщение об ошибке
     _hideInputError(inputElement) {
-        this._errorElement.textContent = "\u00A0";
+        this._removeErrorText(this._errorElement);
+        this._removeErrorInputClass(inputElement);
+    }
+
+    _removeErrorText(errorElement) {
+        errorElement.textContent = "\u00A0";
+    }
+
+    _removeErrorInputClass(inputElement) {
         inputElement.classList.remove("popup__input_error");
     }
 

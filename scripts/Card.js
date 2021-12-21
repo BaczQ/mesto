@@ -5,23 +5,28 @@ import {
 } from './functions.js';
 
 export class Card {
-    constructor(cardTitle, cardLink, cardSelector, section, ...args) {
+    constructor(cardTitle, cardLink, cardSelector,  ...args) {
         this._cardTitle = cardTitle;
         this._cardLink = cardLink;
         this._templateCard = document.querySelector(cardSelector).content.querySelector('.element'); //Селектор шаблона
-        this._section = document.querySelector(section); //Куда вставляем шаблон
         this._imgPopup = document.querySelector('.image-popup');
+    }
+
+    _getTemplate(){
+        const templateCard = this._templateCard.cloneNode(true);
+        return templateCard;
     }
 
     //отрисовываем карточку
     cardView() {
-        this._templateElement = this._templateCard.cloneNode(true);
-        this._templateElement.querySelector('.element__title').textContent = this._cardTitle;
-        this._elementImg = this._templateElement.querySelector('.element__img');
+        this._element = this._getTemplate();
+        this._elementImg = this._element.querySelector('.element__img');
+        this._elementTitle = this._element.querySelector('.element__title');
+        this._elementTitle.textContent = this._cardTitle;
         this._elementImg.src = this._cardLink;
         this._elementImg.alt = this._cardTitle;
         this._setListeners(); //вешаем слушатели
-        this._section.prepend(this._templateElement); //добавляем в DOM
+        return this._element;
     }
 
     //добавляем слушатели
@@ -34,19 +39,18 @@ export class Card {
     //СЛУШАТЕЛИ
     //ставлю слушатель на кнопку "лайк"
     _setLikeBtnListener() {
-        this._likeBtn = this._templateElement.querySelector('.element__like');
+        this._likeBtn = this._element.querySelector('.element__like');
         this._likeBtn.addEventListener('click', () => this._likeClick());
     }
 
     //ставлю слушатель на кнопку "корзина"
     _setTrashBtnListener() {
-        this._trashBtn = this._templateElement.querySelector('.element__trash');
+        this._trashBtn = this._element.querySelector('.element__trash');
         this._trashBtn.addEventListener('click', () => this._trashClick(this._trashBtn));
     }
 
     //ставлю слушатель на клик по картинке
     _setImgClickListener() {
-
         this._elementImg.addEventListener('click', () => this._imgClick());
     }
 
@@ -57,8 +61,8 @@ export class Card {
     }
 
     //Нажатие на корзину
-    _trashClick(item) {
-        this._templateElement.remove();
+    _trashClick() {
+        this._element.remove();
     }
 
     //нажатие на картинку

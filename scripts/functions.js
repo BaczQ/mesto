@@ -11,22 +11,21 @@ const profilePopup = document.querySelector('.profile-popup');
 const profilePopupForm = profilePopup.querySelector('.profile-popup__container');
 const profilePopupName = profilePopupForm.querySelector('.profile-popup__form-input_value_name');
 const profilePopupJob = profilePopupForm.querySelector('.profile-popup__form-input_value_job');
-const profilePopupBtn = document.querySelector('.profile-popup__button');
 const placePopupForm = document.querySelector('.place-popup__container');
 const placePopup = document.querySelector('.place-popup');
 const placePopupName = placePopupForm.querySelector('.place-popup__form-input_value_name');
 const placePopupLink = placePopupForm.querySelector('.place-popup__form-input_value_link');
-const placePopupBtn = document.querySelector('.place-popup__button');
 const imgPopup = document.querySelector('.image-popup');
 export const imgPopupPicture = imgPopup.querySelector('.image-popup__picture');
 export const imgPopupText = imgPopup.querySelector('.image-popup__text');
+export const section = document.querySelector('.elements');
 
 const validationConfig = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: '.popup__error'
 };
 
 //Создаём объекты для валидации форм
@@ -85,12 +84,17 @@ export function openPlacePopup() {
   placePopupName.value = '';
   placePopupLink.value = '';
   formPlace.toggleButtonState();
-  formPlace.setError();
+  formPlace.clearError();
 }
+
+//Создаём карточку
+export function createCard (name, link) {
+  const card = new Card(name, link, '.template-element');
+  return card.cardView();
+  }
 
 //Отправка формы попапа place
 export function submitPlaceHandler(evt) {
-  const newcard = new Card(placePopupName.value, placePopupLink.value, '.template-element', '.elements');
-  newcard.cardView();
+  section.prepend(createCard(placePopupName.value, placePopupLink.value));
   closePopup(placePopup);
 }

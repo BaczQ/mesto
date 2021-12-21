@@ -1,12 +1,11 @@
 import {
-  Card
-} from './Card.js';
-import {
   closePopup,
   openProfilePopup,
   submitProfileHandler,
   openPlacePopup,
-  submitPlaceHandler
+  submitPlaceHandler,
+  createCard,
+  section
 } from './functions.js';
 import {
   initialCards
@@ -53,10 +52,9 @@ popups.forEach((popup) => {
 
 //ВЫВОЖУ КАРТОЧКИ
 function renderCards(initialCards) {
-  let i = 1;
   initialCards.forEach(item => {
-    const card = new Card(item.name, item.link, '.template-element', '.elements');
-    card.cardView();
+    const card = createCard(item.name, item.link);
+    section.prepend(card); //добавляем в DOM
   });
 }
 
