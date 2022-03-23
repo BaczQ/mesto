@@ -1,0 +1,40 @@
+.profile-popup__button {
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0px auto;
+    margin-top: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    border-radius: 2px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 38px;
+}
+
+.profile-popup__button:hover {
+    opacity: .8;
+}
+
+.profile-popup__button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px #cbd6ee;
+}
+
+@media screen and (max-width: 470px) {
+    .profile-popup__button {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        margin-top: 26px;
+        font-size: 14px;
+        line-height: 17px;
+        margin-bottom: 6px;
+    }
+}
