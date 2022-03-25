@@ -15,6 +15,6 @@ export default class Section {
   }
 
   addItem(element) {
-    this._container.append(element); // в _container добавляем element
+    this._container.prepend(element); // в _container добавляем element
   }
 }

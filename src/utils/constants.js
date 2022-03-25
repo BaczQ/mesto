@@ -3,7 +3,8 @@ const validationConfig = {
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_disabled',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: '.popup__error'
+    errorClass: '.popup__error',
+    inputErrSelector: '.popup__input_error'
 };
 
 const elementsSelector = '.elements'; // класс секции, в которую вставляем карточки

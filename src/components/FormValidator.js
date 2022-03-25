@@ -1,5 +1,3 @@
-import {inputErrSelector} from '../utils/constants.js';
-
 export class FormValidator {
     constructor(config, formElement) {
         this._config = config;
@@ -40,7 +38,6 @@ export class FormValidator {
 
     //устанавливаем слушатели
     _setListeners() {
- 
 
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
@@ -50,9 +47,7 @@ export class FormValidator {
         });
     }
 
-    _disableButton(btn, selector){
-        console.log(btn);
-        console.log(selector);
+    _disableButton(btn, selector) {
         btn.classList.add(selector);
     }
 
@@ -78,13 +73,13 @@ export class FormValidator {
     }
 
     _removeErrorInputClass(inputElement) {
-        inputElement.classList.remove(inputErrSelector);
+        inputElement.classList.remove(this._config.inputErrSelector);
     }
 
     //Показываем сообщение об ошибке
     _showInputError(inputElement) {
         this._errorElement.textContent = inputElement.validationMessage;
-        inputElement.classList.add(inputErrSelector);
+        inputElement.classList.add(this._config.inputErrSelector);
     }
 
     //Меняем стиль кнопки попапов

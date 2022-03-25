@@ -11,14 +11,15 @@ export class PopupWithImage extends Popup {
 
   constructor(popupSelector) {
     super(popupSelector);
+    this.imgPopupPhotoSrc = document.querySelector(popupImgLinkSelector);
+    this.imgPopupPhotoTitle = document.querySelector(popupImgTextSelector);
+
   }
 
   open(src, title) {
-    const imgPopupPhotoSrc = document.querySelector(popupImgLinkSelector);
-    const imgPopupPhotoTitle = document.querySelector(popupImgTextSelector);
-    imgPopupPhotoSrc.src = src;
-    imgPopupPhotoSrc.alt = title;
-    imgPopupPhotoTitle.textContent = title;
+    this.imgPopupPhotoSrc.src = src;
+    this.imgPopupPhotoSrc.alt = title;
+    this.imgPopupPhotoTitle.textContent = title;
     super.open();
   }
 

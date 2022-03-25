@@ -2,12 +2,12 @@ export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._handleEscClose = this._handleEscClose.bind(this); //привязываем контекст через bind, чтобы зафиксировать this
+    
   }
 
   _handleEscClose(event) {
     const key = event.key;
     if (key === "Escape") {
-      const openedPopup = document.querySelector('.popup_opened');
       this.close();
     }
   }

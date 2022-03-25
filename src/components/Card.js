@@ -8,12 +8,13 @@ import {
 } from '../utils/constants.js';
 
 export class Card {
-    constructor(cardTitle, cardLink, cardSelector, handleCardClick, ...args) {
+    constructor(cardTitle, cardLink, cardSelector, popupItem, ...args) {
         this._cardTitle = cardTitle;
         this._cardLink = cardLink;
-        this._handleCardClick = handleCardClick;
+        this.popupItem = popupItem;
         this._templateCard = document.querySelector(cardSelector).content.querySelector('.element'); //Селектор шаблона
         this._imgPopup = document.querySelector(imgPopupSelector);
+
     }
 
     _getTemplate() {
@@ -26,6 +27,7 @@ export class Card {
         this._element = this._getTemplate();
         this._elementImg = this._element.querySelector(elementImgSelector);
         this._elementTitle = this._element.querySelector(elementTitleSelector);
+        this._likeBtn = this._element.querySelector(elementLikeSelector);
         this._elementTitle.textContent = this._cardTitle;
         this._elementImg.src = this._cardLink;
         this._elementImg.alt = this._cardTitle;
@@ -35,15 +37,19 @@ export class Card {
 
     //добавляем слушатели
     _setListeners() {
-        this._elementImg.addEventListener('click', this._handleCardClick);
+        //this._elementImg.addEventListener('click', this._handleCardClick);
+        this._elementImg.addEventListener('click', () => this._handleCardClick(this._cardTitle, this._cardLink));
         this._setLikeBtnListener();
         this._setTrashBtnListener();
-        }
+    }
+
+    _handleCardClick(cardTitle, cardLink) {
+        this.popupItem.open(cardLink, cardTitle);
+    }
 
     //СЛУШАТЕЛИ
     //ставлю слушатель на кнопку "лайк"
     _setLikeBtnListener() {
-        this._likeBtn = this._element.querySelector(elementLikeSelector);
         this._likeBtn.addEventListener('click', () => this._likeClick());
     }
 

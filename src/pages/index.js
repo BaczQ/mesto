@@ -22,10 +22,6 @@ import {
     addBtn,
     profileTitle,
     profileJob,
-    imgPopup,
-    placePopupButton,
-    popupImgLinkSelector,
-    popupImgTextSelector,
     profilePopupSelector,
     placePopupSelector,
     profilePopupFormSelector,
@@ -46,12 +42,8 @@ import {
 
 //---------- объявляем переменные
 
-export const imgPopupPicture = imgPopup.querySelector(popupImgLinkSelector);
-export const imgPopupText = imgPopup.querySelector(popupImgTextSelector);
-export const section = document.querySelector(elementsSelector);
-
 const cardList = new Section({
-    items: initialCards,
+    items: initialCards.reverse(),
     renderer: (name, link) => {
         const newCard = createCard(name, link);
         cardList.addItem(newCard);
@@ -77,16 +69,16 @@ cardList.renderItems(); //отрисовываем первоначальные 
 //СЛУШАТЕЛИ
 //Нажатие кнопки редактирования профиля
 editBtn.addEventListener('click', () => {
-    profilePopup.open();
     profilePopup.setInputValues(Object.values(userInfo.getUserInfo())); //обновляю инпуты в попапе профиля при его открытии
+    profilePopup.open();
 
 });
 
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', () => {
-    placePopup.open();
     placePopup.setInputValues(); //обновляю инпуты в попапе добавления карточек при его открытии
-    formPlace._disableButton(placePopupButton, validationConfig.inactiveButtonClass);
+    placePopup.open();
+    formPlace.toggleButtonState();
 });
 
 //Создаём объекты для валидации форм и валидируем форму
@@ -99,13 +91,13 @@ formPlace.enableValidation();
 //ФУНКЦИИ
 //Создаём карточку
 function createCard(name, link) {
-    const card = new Card(name, link, '.template-element', handleCardClick);
+    const card = new Card(name, link, '.template-element', imagePopup);
     return card.cardView();
 }
 
 function submitEditForm() {
     userInfo.setUserInfo(profilePopup._getInputValues().submitName,
-        profilePopup._getInputValues().submitJob);
+    profilePopup._getInputValues().submitJob);
     profilePopup.close();
 }
 
@@ -113,10 +105,4 @@ function submitAddForm() {
     const newCard = createCard(placePopup._getInputValues().submitPlace, placePopup._getInputValues().submitLink);
     cardList.addItem(newCard);
     placePopup.close();
-}
-
-function handleCardClick(evt) {
-    const src = evt.target.src;
-    const alt = evt.target.alt;
-    imagePopup.open(src, alt);
 }
