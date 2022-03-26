@@ -61,8 +61,6 @@ placePopup.setEventListeners();
 
 const userInfo = new UserInfo(profileTitle, profileJob);
 
-
-
 //ДЕЙСТВИЯ
 cardList.renderItems(); //отрисовываем первоначальные карточки
 
@@ -91,18 +89,21 @@ formPlace.enableValidation();
 //ФУНКЦИИ
 //Создаём карточку
 function createCard(name, link) {
-    const card = new Card(name, link, '.template-element', imagePopup);
+    const card = new Card(name, link, '.template-element', handleCardClick);
     return card.cardView();
 }
 
-function submitEditForm() {
-    userInfo.setUserInfo(profilePopup._getInputValues().submitName,
-    profilePopup._getInputValues().submitJob);
-    profilePopup.close();
+function submitEditForm(data) {
+    userInfo.setUserInfo(data);
+    profilePopup.close(); 
 }
 
 function submitAddForm() {
-    const newCard = createCard(placePopup._getInputValues().submitPlace, placePopup._getInputValues().submitLink);
+    const newCard = createCard(placePopup.getInputValues().submitPlace, placePopup.getInputValues().submitLink);
     cardList.addItem(newCard);
     placePopup.close();
+}
+
+function handleCardClick(text, img) {
+    imagePopup.open(img, text);
 }

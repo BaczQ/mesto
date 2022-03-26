@@ -11,8 +11,8 @@ export class UserInfo {
     };
   }
 
-  setUserInfo(setUserName, setUserJob) {
-    this._name.textContent = setUserName;
-    this._job.textContent = setUserJob;
+  setUserInfo(data) {
+    this._name.textContent = data.submitName;
+    this._job.textContent = data.submitJob;
   }
 }

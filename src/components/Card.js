@@ -8,13 +8,12 @@ import {
 } from '../utils/constants.js';
 
 export class Card {
-    constructor(cardTitle, cardLink, cardSelector, popupItem, ...args) {
+    constructor(cardTitle, cardLink, cardSelector, handleCardClick, ...args) {
         this._cardTitle = cardTitle;
         this._cardLink = cardLink;
-        this.popupItem = popupItem;
         this._templateCard = document.querySelector(cardSelector).content.querySelector('.element'); //Селектор шаблона
         this._imgPopup = document.querySelector(imgPopupSelector);
-
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -31,20 +30,16 @@ export class Card {
         this._elementTitle.textContent = this._cardTitle;
         this._elementImg.src = this._cardLink;
         this._elementImg.alt = this._cardTitle;
+        
         this._setListeners(); //вешаем слушатели
         return this._element;
     }
 
     //добавляем слушатели
     _setListeners() {
-        //this._elementImg.addEventListener('click', this._handleCardClick);
         this._elementImg.addEventListener('click', () => this._handleCardClick(this._cardTitle, this._cardLink));
         this._setLikeBtnListener();
         this._setTrashBtnListener();
-    }
-
-    _handleCardClick(cardTitle, cardLink) {
-        this.popupItem.open(cardLink, cardTitle);
     }
 
     //СЛУШАТЕЛИ
