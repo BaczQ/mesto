@@ -1,7 +1,0 @@
-.element__bottom {
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 25px;
-    padding-bottom: 25px;
-}
