@@ -1,0 +1,9 @@
+.element__like-block {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    margin-right: 20px;
+    align-self: center;
+    border: 0;
+}

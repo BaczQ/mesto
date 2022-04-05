@@ -7,7 +7,7 @@ import {
 } from '../utils/constants.js';
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, popupSubmit) {
+    constructor(popupSelector, popupSubmit) {
     super(popupSelector);
     this._popupSubmit = popupSubmit;
     this._inputs = this._popup.querySelectorAll(popupInputSelector); //все импуты попапа

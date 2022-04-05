@@ -46,6 +46,10 @@ const placePopupButton = placePopupForm.querySelector('.place-popup__button');
 const imgPopupText = imgPopup.querySelector('.image-popup__text');
 const section = document.querySelector('.elements');
 
+//CONFIRM-POPUP
+const confirmPopupSelector = '.confirm-popup';
+
+
 export {
     elementsSelector,
     imgPopupSelector,
@@ -79,5 +83,6 @@ export {
     profilePopupFormSelector,
     validationConfig,
     imgPopupText,
-    section
+    section,
+    confirmPopupSelector
 };

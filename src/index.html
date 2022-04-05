@@ -19,7 +19,8 @@
 
         <main>
             <section class="profile">
-                <img src="<%=require('./images/profile/__avatar/kusto.jpg')%>" class="profile__avatar" alt="аватар пользователя" />
+                <img src="<%=require('./images/profile/__avatar/kusto.jpg')%>" class="profile__avatar"
+                    alt="аватар пользователя" />
                 <div class="profile__info">
                     <div class="profile__name">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -49,15 +50,11 @@
             <h2 class="profile-popup__title">Редактировать профиль</h2>
             <form name="profile-popup-form" class="popup__form profile-popup__form">
                 <input class="popup__input profile-popup__form-input profile-popup__form-input_value_name" type="text"
-                    value="" name="submitName" minlength="2" maxlength="40" required />
-
-                <span class="popup__error" id="submitName-error">&nbsp;</span>
-
+                    value="" name="name" minlength="2" maxlength="40" required />
+                <span class="popup__error" id="name-error">&nbsp;</span>
                 <input class="popup__input profile-popup__form-input profile-popup__form-input_value_job" type="text"
-                    value="" name="submitJob" minlength="2" maxlength="200" required />
-
-                <span class="popup__error" id="submitJob-error">&nbsp;</span>
-
+                    value="" name="about" minlength="2" maxlength="200" required />
+                <span class="popup__error" id="about-error">&nbsp;</span>
                 <button type="submit" class="popup__button profile-popup__button animation-elements">Сохранить</button>
             </form>
         </div>
@@ -84,6 +81,18 @@
         </div>
     </div>
 
+
+      <div class="popup confirm-popup">
+        <div class="confirm-popup__container animation-popup">
+            <button class="popup__close" type="button"></button>
+            <h2 class="confirm-popup__title">Вы уверены?</h2>
+            <form name="confirm-popup-form" class="popup__form confirm-popup__form">
+                <button type="submit" class="popup__button confirm-popup__button animation-elements">Да</button>
+            </form>
+        </div>
+    </div>
+
+
     <div class="popup image-popup">
         <div class="image-popup__container animation-popup">
             <button class="popup__close" type="button"></button>
@@ -91,6 +100,8 @@
             <p class="image-popup__text">Описание</p>
         </div>
     </div>
+
+   
 
     <!-- ШАБЛОН КАРТОЧКИ-->
     <template class="template-element">
@@ -104,7 +115,10 @@
 
             <div class="element__bottom">
                 <h2 class="element__title">Тачка</h2>
-                <button type="button" class="element__like animation-elements"></button>
+                <div class="element__like-block">
+                    <button type="button" class="element__like animation-elements"></button>
+                    <span class="element__likes-count">#</span>
+                </div>
             </div>
         </article>
     </template>

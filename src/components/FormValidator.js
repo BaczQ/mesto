@@ -1,5 +1,7 @@
 export class FormValidator {
     constructor(config, formElement) {
+        //console.log('Работает constructor class FormValidator');
+
         this._config = config;
         this._formElement = document.querySelector(formElement);
         this._inputList = Array.from(this._formElement.querySelectorAll(config.inputSelector));
