@@ -8,23 +8,48 @@ import {
 } from '../utils/constants.js';
 
 export class Card {
-    constructor(cardTitle, cardLink, cardLikes, cardSelector, handleCardClick, isTrash, handleTrashClick, ...args) {
-        this._cardLikes = cardLikes;
-        this._cardTitle = cardTitle;
-        this._cardLink = cardLink;
-        this._templateCard = document.querySelector(cardSelector).content.querySelector('.element'); //Селектор шаблона
+    //constructor(cardTitle, cardLink, cardLikes, cardSelector, handleCardClick, isTrash, handleTrashClick, ...args) {
+    constructor(cardData, cardSelectors, cardFunctions, ...args){
+
+        console.log(' ');
+        console.log('------------------------------------');
+        console.log('     Работает constructor в class Card.js');
+
+        //переменные из cardData
+        this._cardLikes = cardData.likes;
+        this._cardId = cardData._id;
+        this._cardTitle = cardData.name;
+        this._cardLink = cardData.link;
+        this._ownerId = cardData.owner._id;
+        this._isTrash = cardData.isTrash;
+
+        //переменные из cardSelectors
+        this._cardSelector = cardSelectors.cardSelector;
         this._imgPopup = document.querySelector(imgPopupSelector);
-        this._handleCardClick = handleCardClick;
-        this._handleTrashClick = handleCardClick;
-        this._isTrash = isTrash;
+        this._templateCard = document.querySelector(cardSelectors.cardSelector).content.querySelector('.element'); //Селектор шаблона 
+        
+        //переменные из cardFunctions
+        this._handleCardClick = cardFunctions.handleCardClick;
+        this._handleTrashClick = cardFunctions.handleCardClick;
+
+        console.log('-----Переменные из cardData');
+        console.log(this._cardTitle);
+        console.log(this._cardLink);
+        console.log(this._cardLikes);
+        console.log(this._ownerId);
+        console.log(this._isTrash);
+        console.log('-----Переменные из cardSelectors');
+        console.log(this._cardSelector);
+        console.log(this._imgPopup);
+        console.log(this._templateCard);
+        console.log('-----Переменные из cardFunctions');
+        console.log(this._handleCardClick);
+        console.log(this._handleTrashClick);
+        
+        console.log('     Конец constructor в class Card.js');
+        console.log('------------------------------------');
         
 
-
-        console.log(this._cardTrash);
-        //console.log(' - - - - - - - - - - - - - - - - - - - - - - - -');
-        //console.log('Работает constructor в class Card.js');
-        //console.log('this._cardLikes');
-        //console.log(this._cardLikes);
     }
 
     _getTemplate() {
@@ -47,20 +72,17 @@ export class Card {
         this._likeCounter = this._element.querySelector('.element__likes-count');
         this._likeCounter.textContent = this._cardLikes.length;
         
-        //this._cardTrash.classList.add('111');
-        
-
         
         this._setListeners(); //вешаем слушатели
         
-
         //проверяем нужен ли значок корзины
         if (!this._isTrash){
             this._element.querySelector('.element__trash').remove();
         }
         
 
-
+        console.log('this._element');
+        console.log(this._element);
         return this._element;
     }
 

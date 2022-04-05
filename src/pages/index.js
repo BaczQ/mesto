@@ -80,8 +80,8 @@ api.getInitialCards()
             
             //проверяем принадлежит ли карточка пользователю
             const isTrash = data[item].owner._id == api.id;
-            
-            const newCard = createCard(data[item].name, data[item].link, data[item].likes, isTrash);
+            data[item].isTrash = isTrash;
+            const newCard = createCard(data[item]);
             cardList.addItem(newCard);
 
         }
@@ -150,10 +150,16 @@ formConfirm.enableValidation();
 
 //ФУНКЦИИ
 //Создаём карточку
-function createCard(name, link, likes, isTrash) {
-    //console.log('!!!!!!!!!!!!!!!!');
-    //console.log(likes);
-    const card = new Card(name, link, likes, '.template-element', handleCardClick, isTrash);
+
+
+function createCard(data, selectors, functions, ...args) {
+
+    console.log('##################################################################');
+    console.log('function createCard(data, selectors, functions, ...args)');
+    
+    const cardSelector = '.template-element';
+
+    const card = new Card(data, {cardSelector}, {handleCardClick});
     return card.cardView();
 }
 
@@ -178,7 +184,31 @@ function submitEditForm(data) {
 
 function submitAddForm() {
     console.log('Работает function submitAddForm() в index.js');
-    const newCard = createCard(placePopup.getInputValues().submitPlace, placePopup.getInputValues().submitLink, [], true);
+
+
+/*
+
+        this._cardLikes = cardData.likes;
+        this._cardId = cardData._id;
+        this._cardTitle = cardData.name;
+        this._cardLink = cardData.link;
+        this._ownerId = cardData.owner._id;
+        this._isTrash = cardData.isTrash;
+
+*/
+
+    const data = {
+        likes: [],
+        name: placePopup.getInputValues().submitPlace,
+        link: placePopup.getInputValues().submitLink,
+        isTrash: true,
+        owner: {id: '0'}
+    };
+
+    const cardSelector = '.template-element';
+
+    const newCard = createCard(data, {cardSelector}, true);
+
     cardList.addItem(newCard);
     api.sendNewCard({
         name: placePopup.getInputValues().submitPlace,
