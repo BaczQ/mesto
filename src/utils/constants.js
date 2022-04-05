@@ -29,6 +29,7 @@ const profileTitle = '.profile__title';
 const profileJob = '.profile__subtitle';
 const profileSubTitle = document.querySelector('.profile__subtitle');
 const profilePopupName = profilePopupForm.querySelector('.profile-popup__form-input_value_name');
+const profileAvatar = '.profile__avatar';
 
 //ВСЕ ПОПАПЫ
 const popups = document.querySelectorAll('.popup'); //Все попапы
@@ -61,6 +62,7 @@ export {
     profilePopupJob,
     profileTitle,
     profileJob,
+    profileAvatar,
     profileSubTitle,
     profilePopupName,
     popups,

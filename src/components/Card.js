@@ -25,12 +25,15 @@ export class Card {
 
         //переменные из cardSelectors
         this._cardSelector = cardSelectors.cardSelector;
-        this._imgPopup = document.querySelector(imgPopupSelector);
-        this._templateCard = document.querySelector(cardSelectors.cardSelector).content.querySelector('.element'); //Селектор шаблона 
         
         //переменные из cardFunctions
         this._handleCardClick = cardFunctions.handleCardClick;
         this._handleTrashClick = cardFunctions.handleCardClick;
+
+        //другие переменные
+        this._imgPopup = document.querySelector(imgPopupSelector);
+        this._templateCard = document.querySelector(cardSelectors.cardSelector).content.querySelector('.element'); //Селектор шаблона 
+
 
         console.log('-----Переменные из cardData');
         console.log(this._cardTitle);
@@ -48,7 +51,6 @@ export class Card {
         
         console.log('     Конец constructor в class Card.js');
         console.log('------------------------------------');
-        
 
     }
 

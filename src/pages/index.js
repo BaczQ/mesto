@@ -20,6 +20,7 @@ import {
     addBtn,
     profileTitle,
     profileJob,
+    profileAvatar,
     profilePopupSelector,
     placePopupSelector,
     profilePopupFormSelector,
@@ -40,8 +41,17 @@ import {
     UserInfo
 } from '../components/UserInfo.js';
 
-//---------- объявляем переменные
 
+const userInfo = new UserInfo({
+    name: profileTitle,
+    about: profileJob,
+    avatar: profileAvatar
+});
+
+
+
+
+//---------- объявляем переменные
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-38/',
     headers: {
@@ -49,6 +59,15 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 });
+
+
+
+const cardList = new Section({
+    renderer: (name, link, likes) => {
+        const newCard = createCard(name, link, likes);
+        cardList.addItem(newCard);
+    }
+}, elementsSelector);
 
 
 //----------выводим инфо профиля из api
@@ -97,12 +116,7 @@ api.getInitialCards()
 
 
 
-const cardList = new Section({
-    renderer: (name, link, likes) => {
-        const newCard = createCard(name, link, likes);
-        cardList.addItem(newCard);
-    }
-}, elementsSelector);
+
 
 export const imagePopup = new PopupWithImage(imgPopupSelector);
 imagePopup.setEventListeners();
@@ -118,11 +132,7 @@ confirmPopup.setEventListeners();
 
 
 
-const userInfo = new UserInfo({
-    name: profileTitle,
-    about: profileJob,
-    avatar: '.profile__avatar'
-});
+
 
 //СЛУШАТЕЛИ
 //Нажатие кнопки редактирования профиля
