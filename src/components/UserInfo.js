@@ -16,12 +16,11 @@ export class UserInfo {
   }
 
   setUserInfo(data) {
-    console.log(data);
-    this._name.textContent = data.name;
-    this._job.textContent = data.about;
+    this._name.textContent = data.name; // заменили имя профиля значениями из сервера
+    this._job.textContent = data.about; // заменили инфо профиля значениями из сервера
     if (data.avatar) {
-      this._avatar.src = data.avatar;
+      this._avatar.src = data.avatar; // заменили аватар на аватар из сервера
     }
-    
+    this._id = data._id; //присвоили id
   }
 }

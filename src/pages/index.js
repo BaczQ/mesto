@@ -26,8 +26,13 @@ import {
     profilePopupFormSelector,
     validationConfig,
     confirmPopupSelector
-    
+
 } from '../utils/constants.js';
+
+import {
+    initialCards
+
+} from '../utils/dataCards.js';
 
 import {
     PopupWithForm
@@ -60,59 +65,56 @@ const api = new Api({
     }
 });
 
-
-
 const cardList = new Section({
-    renderer: (name, link, likes) => {
-        const newCard = createCard(name, link, likes);
+    renderer: (data) => {
+        const newCard = createCard(data);
         cardList.addItem(newCard);
     }
 }, elementsSelector);
 
 
-//----------выводим инфо профиля из api
+//----------получаем инфо профиля из сервера
+
 api.getUserData().then((res) => {
-    console.log('api.getUserData()');
+    console.log(' ');
+    console.log('получаем инфо профиля из сервера - api.getUserData()');
     console.log(res);
+
     userInfo.setUserInfo(res);
     //заполняем переменные для дальнейшей отправки карточек
     api.id = res._id;
-    api.cohort = res.cohort;
-    api.name = res.name;
-    api.about = res.about;
-    api.avatar = res.avatar;
-    console.log('api._id = ' + api.id);
-    console.log('api.cohort = ' + api.cohort);
-    console.log('api.name = ' + api.name);
-    console.log('api.about = ' + api.about);
+}).catch((err) => {
+    console.log(`Ошибка чтения профиля пользователя. ${err}.`);
+
 });
 
 
-
-
-//----------выводим карточки из api
+//----------получаем инфо для создания карточек из сервера
 
 api.getInitialCards()
     .then((data) => {
         // получаем каждую карточку отдельно
         for (let item in data) {
-            
             //проверяем принадлежит ли карточка пользователю
             const isTrash = data[item].owner._id == api.id;
             data[item].isTrash = isTrash;
             const newCard = createCard(data[item]);
             cardList.addItem(newCard);
-
+            
         }
     })
     .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
+        console.log(`Ошибка чтения карточек с сервера. ${err}.`); // выведем ошибку в консоль
+        for (let item in initialCards) {
+            const newCard = createCard(initialCards[item]);
+            cardList.addItem(newCard);
+        }
     });
 
 
 
-    
-    
+
+
 
 
 
@@ -166,10 +168,39 @@ function createCard(data, selectors, functions, ...args) {
 
     console.log('##################################################################');
     console.log('function createCard(data, selectors, functions, ...args)');
-    
+
     const cardSelector = '.template-element';
 
-    const card = new Card(data, {cardSelector}, {handleCardClick});
+    const card = new Card(data, userInfo._id, {
+        cardSelector
+    }, {
+        handleCardClick,
+        setLike: (data) => {
+            console.log('Работает setLike в createCard(data, selectors, functions, ...args) в index.js');
+            console.log(data);
+
+            api.setLike(data)
+                .then((data) => {
+                    console.log('card.setLikes(data);');
+                    console.log(data);
+                    card.setLikes(data.likes);
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+        deleteLike: (data) => {
+            console.log('Работает deleteLike в createCard(data, selectors, functions, ...args) в index.js');
+            api.deleteLike(data)
+                .then((data) => {
+                    card.setLikeCount(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+    });
     return card.cardView();
 }
 
@@ -189,35 +220,27 @@ function submitEditForm(data) {
 
     console.log('Работает function submitEditForm(data) в index.js');
     console.log(data);
-    
+
 }
 
 function submitAddForm() {
     console.log('Работает function submitAddForm() в index.js');
-
-
-/*
-
-        this._cardLikes = cardData.likes;
-        this._cardId = cardData._id;
-        this._cardTitle = cardData.name;
-        this._cardLink = cardData.link;
-        this._ownerId = cardData.owner._id;
-        this._isTrash = cardData.isTrash;
-
-*/
 
     const data = {
         likes: [],
         name: placePopup.getInputValues().submitPlace,
         link: placePopup.getInputValues().submitLink,
         isTrash: true,
-        owner: {id: '0'}
+        owner: {
+            id: '0'
+        }
     };
 
     const cardSelector = '.template-element';
 
-    const newCard = createCard(data, {cardSelector}, true);
+    const newCard = createCard(data, {
+        cardSelector
+    }, true);
 
     cardList.addItem(newCard);
     api.sendNewCard({
@@ -231,15 +254,16 @@ function submitAddForm() {
 function submitConfirmForm() {
 
     console.log('Работает function submitConfirmForm() в index.js');
-    
-    
+
+
     confirmPopup.close();
 }
 
 
-
-
 function handleCardClick(text, img) {
-    //console.log('Работает function handleCardClick(text, img) в index.js');
+    console.log('Работает function handleCardClick(text, img) в index.js');
+    console.log(text);
+    console.log(img);
+
     imagePopup.open(img, text);
 }

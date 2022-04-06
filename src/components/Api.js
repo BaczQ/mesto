@@ -97,7 +97,21 @@ export class Api {
     }).then((res) => this._getStatus(res));
   }
 
+  setLike(data) {
+    
+    return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {
+      method: 'PUT',
+      headers: this._headers,
+    }).then((res) => this._getStatus(res));
+  }
 
+
+  deleteLike(data) {
+    return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => this._getStatus(res));
+  }
 
 
 }
