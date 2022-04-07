@@ -7,13 +7,15 @@ export default class Section {
   }
 
   renderItems(items) {
+console.log('items');
+console.log(items);
+
     items.forEach(card => {
       this._renderer(card);
     });
   }
 
   addItem(element) {
-    //console.log('Работает addItem(element) в class Section.js');
     this._container.prepend(element); // в _container добавляем element
   }
 }

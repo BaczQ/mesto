@@ -5,10 +5,8 @@ export class Api {
   }) {
     console.log(' - - - - - - - - - - - - - - - - - - - - - - - -');
     console.log('Работает constructor в class Api');
-
     this._baseUrl = baseUrl;
     this._headers = headers;
-    //this.id = '';
     this.cohort = '';
     this.name = '';
     this.about = '';
@@ -70,8 +68,6 @@ export class Api {
       body: JSON.stringify({
 
         likes: [],
-        //_id: this.id,
-
         name: newCard.name,
         link: newCard.link,
 
@@ -98,7 +94,6 @@ export class Api {
   }
 
   setLike(data) {
-    
     return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {
       method: 'PUT',
       headers: this._headers,
