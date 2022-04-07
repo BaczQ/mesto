@@ -83,7 +83,9 @@ export class Api {
 
       }),
       headers: this._headers,
-    });
+    }).then((res) => this._getStatus(res));
+
+    
   }
 
   deleteCard(cardId) {
@@ -99,7 +101,6 @@ export class Api {
       headers: this._headers,
     }).then((res) => this._getStatus(res));
   }
-
 
   deleteLike(data) {
     return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {

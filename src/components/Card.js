@@ -47,7 +47,10 @@ export class Card {
 
     //отрисовываем карточку
     cardView() {
-        //console.log('Работает cardView() в class Card.js');
+        console.log('Работает cardView() в class Card.js');
+        console.log('this._cardData');
+        console.log(this._cardData);
+
         this._element = this._getTemplate();
         this._elementImg = this._element.querySelector(elementImgSelector);
         this._elementTitle = this._element.querySelector(elementTitleSelector);

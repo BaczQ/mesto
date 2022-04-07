@@ -7,10 +7,7 @@ export default class Section {
   }
 
   renderItems(items) {
-console.log('items');
-console.log(items);
-
-    items.forEach(card => {
+    items.reverse().forEach(card => {
       this._renderer(card);
     });
   }

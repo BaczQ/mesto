@@ -71,6 +71,8 @@ const cardList = new Section({
 //----------получаем инфо профиля из сервера
 
 api.getUserData().then((res) => {
+    console.log('api.getUserData().then((res) => {');
+    console.log(res);
     userInfo.setUserInfo(res);
     //заполняем переменные для дальнейшей отправки карточек
     api.id = res._id;
@@ -80,18 +82,23 @@ api.getUserData().then((res) => {
 
 //----------получаем инфо для создания карточек из сервера
 
+
+
 api.getInitialCards()
     .then((data) => {
         // получаем каждую карточку отдельно
         console.log("!!!!!!!");
         console.log(data);
+
+        //проверяем принадлежит ли карточка пользователю
         for (let item in data) {
-            //проверяем принадлежит ли карточка пользователю
             const isTrash = data[item].owner._id == api.id;
             data[item].isTrash = isTrash;
-            const newCard = createCard(data[item]);
-            cardList.addItem(newCard);
         }
+
+        cardList.renderItems(data);
+
+
     })
     .catch((err) => {
         console.log(`Ошибка чтения карточек с сервера. ${err}.`); // выведем ошибку в консоль
@@ -100,6 +107,13 @@ api.getInitialCards()
             cardList.addItem(newCard);
         }
     });
+
+
+
+
+
+
+
 
 
 
@@ -155,8 +169,8 @@ formConfirm.enableValidation();
 
 function createCard(data, selectors, functions, ...args) {
 
-    //console.log('##################################################################');
-    
+    console.log('##################################################################');
+
     const cardSelector = '.template-element';
 
     const card = new Card(data, userInfo._id, {
@@ -164,6 +178,7 @@ function createCard(data, selectors, functions, ...args) {
     }, {
         handleCardClick,
         setLike: (data) => {
+            console.log(data);
             api.setLike(data)
                 .then((data) => {
                     card.setLikeCounter(data.likes);
@@ -200,28 +215,42 @@ function submitEditForm(data) {
 }
 
 function submitAddForm() {
-    const data = {
-        likes: [],
-        name: placePopup.getInputValues().submitPlace,
-        link: placePopup.getInputValues().submitLink,
-        isTrash: true,
-        owner: {
-            id: '0'
-        }
-    };
 
-    const cardSelector = '.template-element';
+    api.sendNewCard({ //отправляем данные карточки на сервер
+            name: placePopup.getInputValues().submitPlace,
+            link: placePopup.getInputValues().submitLink
+        })
+        .then((res) => {
+            const data = {
+                likes: [],
+                _id: res._id,
+                name: placePopup.getInputValues().submitPlace,
+                link: placePopup.getInputValues().submitLink,
+                isTrash: true,
+                owner: {
+                    id: res.owner._id
+                }
+            };
+            const cardSelector = '.template-element';
+            const newCard = createCard(data, {
+                cardSelector
+            }, true);
+            cardList.addItem(newCard);
+        }); 
 
-    const newCard = createCard(data, {
-        cardSelector
-    }, true);
 
-    cardList.addItem(newCard);
-    api.sendNewCard({
-        name: placePopup.getInputValues().submitPlace,
-        link: placePopup.getInputValues().submitLink
-    }); //отправляем данные карточки на сервер
+
+
+
+
+
+
+
+
+
+
     placePopup.close();
+
 }
 
 function submitConfirmForm() {
