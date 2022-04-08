@@ -43,6 +43,10 @@ import {
 } from '../components/PopupWithImage.js';
 
 import {
+    PopupConfirm
+} from '../components/PopupConfirm.js';
+
+import {
     UserInfo
 } from '../components/UserInfo.js';
 
@@ -51,6 +55,8 @@ const userInfo = new UserInfo({
     about: profileJob,
     avatar: profileAvatar
 });
+
+let currentCard = null;
 
 //---------- объявляем переменные
 const api = new Api({
@@ -71,8 +77,8 @@ const cardList = new Section({
 //----------получаем инфо профиля из сервера
 
 api.getUserData().then((res) => {
-    console.log('api.getUserData().then((res) => {');
-    console.log(res);
+    //console.log('api.getUserData().then((res) => {');
+    //console.log(res);
     userInfo.setUserInfo(res);
     //заполняем переменные для дальнейшей отправки карточек
     api.id = res._id;
@@ -82,13 +88,10 @@ api.getUserData().then((res) => {
 
 //----------получаем инфо для создания карточек из сервера
 
-
-
 api.getInitialCards()
     .then((data) => {
         // получаем каждую карточку отдельно
-        console.log("!!!!!!!");
-        console.log(data);
+        
 
         //проверяем принадлежит ли карточка пользователю
         for (let item in data) {
@@ -97,7 +100,6 @@ api.getInitialCards()
         }
 
         cardList.renderItems(data);
-
 
     })
     .catch((err) => {
@@ -108,22 +110,6 @@ api.getInitialCards()
         }
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const imagePopup = new PopupWithImage(imgPopupSelector);
 imagePopup.setEventListeners();
 
@@ -132,13 +118,6 @@ profilePopup.setEventListeners();
 
 const placePopup = new PopupWithForm(placePopupSelector, submitAddForm);
 placePopup.setEventListeners();
-
-const confirmPopup = new PopupWithForm(confirmPopupSelector, submitConfirmForm);
-confirmPopup.setEventListeners();
-
-
-
-
 
 //СЛУШАТЕЛИ
 //Нажатие кнопки редактирования профиля
@@ -166,40 +145,36 @@ formConfirm.enableValidation();
 //ФУНКЦИИ
 //Создаём карточку
 
-
-function createCard(data, selectors, functions, ...args) {
-
-    console.log('##################################################################');
-
+function createCard(data) {
+    //console.log('Работает function createCard(data) index.js');
     const cardSelector = '.template-element';
 
-    const card = new Card(data, userInfo._id, {
+    const newcard = new Card(data, userInfo._id, {
         cardSelector
     }, {
-        handleCardClick,
-        setLike: (data) => {
-            console.log(data);
-            api.setLike(data)
-                .then((data) => {
-                    card.setLikeCounter(data.likes);
-
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
-        deleteLike: (data) => {
-            api.deleteLike(data)
-                .then((data) => {
-                    card.setLikeCounter(data.likes);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
+        handleCardClick, //клик по картинке на карте
+        setLike, //клик по лайку
+        deleteLike, //клик по лайку
+        handleTrashClick // клик по корзине
     });
-    return card.cardView();
+
+    return newcard.cardView();
 }
+
+const confirmPopup = new PopupConfirm(confirmPopupSelector, {
+    popupSubmit: (data) => {
+        api.deleteCard(data)
+            .then(() => {
+                currentCard.remove();
+            })
+            .then(() => {
+                confirmPopup.close();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+});
 
 //Меняем данные юзера после нажатия кнопки на попапе
 function submitEditForm(data) {
@@ -215,7 +190,6 @@ function submitEditForm(data) {
 }
 
 function submitAddForm() {
-
     api.sendNewCard({ //отправляем данные карточки на сервер
             name: placePopup.getInputValues().submitPlace,
             link: placePopup.getInputValues().submitLink
@@ -236,27 +210,41 @@ function submitAddForm() {
                 cardSelector
             }, true);
             cardList.addItem(newCard);
-        }); 
-
-
-
-
-
-
-
-
-
-
-
-
+        });
     placePopup.close();
-
 }
 
-function submitConfirmForm() {
-    confirmPopup.close();
-}
+//Функции для работы const newcard
 
 function handleCardClick(text, img) {
+    //console.log('function handleCardClick(text, img) index.js');
     imagePopup.open(img, text);
+}
+
+function setLike(data) {
+    //console.log('function setLike(data) index.js');
+    api.setLike(data)
+        .then((data) => {
+            this.setLikeCounter(data.likes);
+        });
+}
+
+function deleteLike(data) {
+    //console.log('function deleteLike(data) index.js');
+    api.deleteLike(data)
+        .then((data) => {
+            this.setLikeCounter(data.likes);
+        }).catch((err) => {
+            console.log(err);
+        });
+}
+
+function handleTrashClick(data) {
+    //console.log('function handleTrashClick(data) index.js');
+    currentCard = getCurrentCard();
+    confirmPopup.open(data);
+}
+
+function getCurrentCard() {
+    return event.target.parentNode.parentNode;
 }

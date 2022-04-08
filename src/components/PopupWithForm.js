@@ -7,7 +7,7 @@ import {
 } from '../utils/constants.js';
 
 export class PopupWithForm extends Popup {
-    constructor(popupSelector, popupSubmit) {
+  constructor(popupSelector, popupSubmit) {
     super(popupSelector);
     this._popupSubmit = popupSubmit;
     this._inputs = this._popup.querySelectorAll(popupInputSelector); //все импуты попапа
@@ -29,8 +29,27 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._form.addEventListener('submit', () => this._popupSubmit(this.getInputValues()));
+    this._form.addEventListener('submit', () => {
+      this._popupSubmit(this.getInputValues());
+      
+      //console.log(this._popupSubmit(this.getInputValues()));
+    });
   }
 
+  setConfirmListener(data, callback) {
+    console.log('!!!!!@!#!#');
+    console.log(data);
+    console.log(callback);
+    this._popupSubmit;
+    
+
+    this._form.addEventListener('submit', () => {
+      console.log('!!!!!@!#!#!!!!!@!#!#');
+      console.log(data);
+      callback(data);
+      
+      
+    });
+  }
 
 }

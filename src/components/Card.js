@@ -8,7 +8,7 @@ import {
 } from '../utils/constants.js';
 
 export class Card {
-    
+
     constructor(cardData, userId, cardSelectors, cardFunctions, ...args) {
 
         /*console.log(' ');
@@ -23,6 +23,7 @@ export class Card {
         this._cardLink = cardData.link;
         this._ownerId = cardData.owner._id;
         this._isTrash = cardData.isTrash;
+        this._id = cardData._id;
 
         //переменные из cardSelectors
         this._cardSelector = cardSelectors.cardSelector;
@@ -32,11 +33,16 @@ export class Card {
         this._setLike = cardFunctions.setLike;
         this._deleteLike = cardFunctions.deleteLike;
         this._handleTrashClick = cardFunctions.handleTrashClick;
+        this._deleteCrd = cardFunctions.deleteCrd;
 
         //другие переменные
         this._imgPopup = document.querySelector(imgPopupSelector);
         this._templateCard = document.querySelector(cardSelectors.cardSelector).content.querySelector('.element'); //Селектор шаблона 
         this._userId = userId;
+
+
+
+
     }
 
     _getTemplate() {
@@ -47,9 +53,8 @@ export class Card {
 
     //отрисовываем карточку
     cardView() {
-        console.log('Работает cardView() в class Card.js');
-        console.log('this._cardData');
-        console.log(this._cardData);
+        //console.log('Работает cardView() в class Card.js');
+        
 
         this._element = this._getTemplate();
         this._elementImg = this._element.querySelector(elementImgSelector);
@@ -62,6 +67,7 @@ export class Card {
         this._setListeners(); //вешаем слушатели
         this.setLikeCounter(this._cardLikes);
         this.setLikeStatus(this._cardLikes);
+        
 
         //проверяем нужен ли значок корзины
         if (!this._isTrash) {
@@ -76,7 +82,7 @@ export class Card {
     }
 
     //отображаем текущее состояние кнопки лайк
-    setLikeStatus(arr){
+    setLikeStatus(arr) {
         // Проверка на лайк от себя самого
         arr.forEach((item) => {
             if (item._id == this._userId) {
@@ -85,11 +91,13 @@ export class Card {
         });
     }
 
+
+
     //добавляем слушатели
-    _setListeners() {
+    _setListeners(callBackk) {
         this._setImageListener(); //слушатель картинки
         this._setLikeBtnListener(); //слушатель лайка
-        this._setTrashBtnListener(); //слушатель корзины
+        this._setTrashBtnListener(callBackk); //слушатель корзины
     }
 
     //СЛУШАТЕЛИ
@@ -99,26 +107,22 @@ export class Card {
         this._elementImg.addEventListener('click', () => this._handleCardClick(this._cardTitle, this._cardLink));
     }
 
-
     _setLikeBtnListener() {
-        this._likeBtn.addEventListener('click', () => this._likeClick(this._cardData));
+        this._likeBtn.addEventListener('click', () => {this._likeClick(this._cardData);
+        });
     }
 
     //ставлю слушатель на кнопку "корзина"
-    _setTrashBtnListener() {
+    _setTrashBtnListener(callBackk) {
         this._trashBtn = this._element.querySelector(elementTrushSelector);
-        this._trashBtn.addEventListener('click', () => this._trashClick(this._trashBtn));
+        this._trashBtn.addEventListener('click', () => {
+        this._handleTrashClick(this._cardData);
+        });
     }
 
     //Нажатие на лайк
     _likeClick(data) {
-        //здесь надо описывать логику снимать лайк или ставить его
-        (this._likeBtn.classList.contains('element__like_active')) ? this._deleteLike(data) : this._setLike(data);
+        (this._likeBtn.classList.contains('element__like_active')) ? this._deleteLike(data): this._setLike(data);
         this._likeBtn.classList.toggle(activeLikeSelector);
-    }
-
-    //Нажатие на корзину
-    _trashClick(evt) {
-        this._element.remove();
     }
 }

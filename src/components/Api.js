@@ -3,8 +3,8 @@ export class Api {
     baseUrl,
     headers
   }) {
-    console.log(' - - - - - - - - - - - - - - - - - - - - - - - -');
-    console.log('Работает constructor в class Api');
+    //console.log(' - - - - - - - - - - - - - - - - - - - - - - - -');
+    //console.log('Работает constructor в class Api');
     this._baseUrl = baseUrl;
     this._headers = headers;
     this.cohort = '';
@@ -24,7 +24,7 @@ export class Api {
 
 
   getUserData() {
-    console.log('Работает getUserData() в class Api');
+    //console.log('Работает getUserData() в class Api');
     return fetch('https://mesto.nomoreparties.co/v1/cohort-38/users/me', {
       method: 'GET',
       headers: this._headers,
@@ -88,14 +88,16 @@ export class Api {
     
   }
 
-  deleteCard(cardId) {
-    return fetch(this._baseUrl + 'cards/'+ cardId, {
+  deleteCard(data) {
+    //console.log('deleteCard(data) in api');
+    return fetch(this._baseUrl + 'cards/'+ data._id, {
       method: 'DELETE',
       headers: this._headers
     }).then((res) => this._getStatus(res));
   }
 
   setLike(data) {
+    //console.log('setLike(data) in api');
     return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {
       method: 'PUT',
       headers: this._headers,
@@ -103,6 +105,7 @@ export class Api {
   }
 
   deleteLike(data) {
+    //console.log('deleteLike(data) in api');
     return fetch(this._baseUrl + 'cards/' + data._id + '/likes', {
       method: 'DELETE',
       headers: this._headers,
