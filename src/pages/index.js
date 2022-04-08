@@ -50,6 +50,11 @@ import {
     UserInfo
 } from '../components/UserInfo.js';
 
+
+	
+
+window.alert = function(){};//чтобы алерты браузера не мешали
+
 const userInfo = new UserInfo({
     name: profileTitle,
     about: profileJob,
