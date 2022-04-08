@@ -13,7 +13,7 @@ export class FormValidator {
     enableValidation() {
         this._noSubmitDefault(); //отменяем стандартные submit'ы
         this._setListeners(); //устанавливаем слушатели
-        console.log('Работает валидация');
+        
     }
 
     setError() { //включаем/выключаем ошибки
