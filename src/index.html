@@ -7,7 +7,7 @@
     <meta name="description" content="Это проект, выполненный для Спринта №8 в Яндекс Практикуме" />
     <meta name="author" content="Алексей Щербаков" />
     <link rel="icon" href="<%=require('./favicon.svg')%>">
-    <title>Спринт 8: Проект Mesto</title>
+    <title>Спринт 9: Проект Mesto</title>
 </head>
 
 <body class="body">
@@ -21,15 +21,14 @@
             <section class="profile">
                 <div class="profile__avatar-container ">
                     <img src="<%=require('./images/profile/__avatar/kusto.jpg')%>" class="profile__avatar"
-                    alt="аватар пользователя" />
+                        alt="аватар пользователя" />
                     <button class="profile__edit-avatar "></button>
                 </div>
-                
+
                 <div class="profile__info">
                     <div class="profile__name">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button" type="button"></button>
-
                     </div>
                     <div class="profile__subtitle">Исследователь океана</div>
                 </div>
@@ -45,7 +44,19 @@
         <footer class="footer">
             <p class="footer__copyright">&copy; 2021. Mesto Russia</p>
         </footer>
+    </div>
 
+    <div class="popup avatar-popup">
+        <div class="avatar-popup__container animation-popup">
+            <button class="popup__close" type="button"></button>
+            <h2 class="avatar-popup__title">Обновить аватар</h2>
+            <form name="avatar-popup-form" class="popup__form avatar-popup__form">
+                <input class="popup__input avatar-popup__form-input" type="url" id="avatar-link"
+                    placeholder="Ссылка на картинку" name="avatar" required>
+                <span class='popup__error' id='avatar-error' role="status"></span>
+                <button type="submit" class="popup__button avatar-popup__button animation-elements">Сохранить</button>
+            </form>
+        </div>
     </div>
 
     <div class="popup profile-popup">
@@ -85,8 +96,7 @@
         </div>
     </div>
 
-
-      <div class="popup confirm-popup">
+    <div class="popup confirm-popup">
         <div class="confirm-popup__container animation-popup">
             <button class="popup__close" type="button"></button>
             <h2 class="confirm-popup__title">Вы уверены?</h2>
@@ -96,7 +106,6 @@
         </div>
     </div>
 
-
     <div class="popup image-popup">
         <div class="image-popup__container animation-popup">
             <button class="popup__close" type="button"></button>
@@ -104,8 +113,6 @@
             <p class="image-popup__text">Описание</p>
         </div>
     </div>
-
-   
 
     <!-- ШАБЛОН КАРТОЧКИ-->
     <template class="template-element">

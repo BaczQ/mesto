@@ -21,6 +21,7 @@ const profilePopupSelector = '.profile-popup';
 const profilePopupFormSelector = '.profile-popup__form';
 const editBtn = document.querySelector('.profile__edit-button'); // кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); //кнопка добавления карточки
+const profileSaveBtn = document.querySelector('.profile-popup__button');
 const profilePopupForm = document.querySelector('.profile-popup__container'); //Попап контейнер для редактирования профиля
 const profilePopupInputName = '.profile-popup__form-input_value_name';
 const profilePopupInputJob = '.profile-popup__form-input_value_job';
@@ -33,8 +34,8 @@ const profileAvatar = '.profile__avatar';
 
 //ВСЕ ПОПАПЫ
 const popups = document.querySelectorAll('.popup'); //Все попапы
-const popupImgLinkSelector ='.image-popup__picture'; 
-const popupImgTextSelector ='.image-popup__text';
+const popupImgLinkSelector = '.image-popup__picture';
+const popupImgTextSelector = '.image-popup__text';
 const popupInputSelector = '.popup__input';
 
 //PLACE-POPUP
@@ -49,13 +50,22 @@ const section = document.querySelector('.elements');
 
 //CONFIRM-POPUP
 const confirmPopupSelector = '.confirm-popup';
+const confirmPopupBtn = document.querySelector('.confirm-popup__button');
 
+//AVATAT POPUP
+const avatarPopupSelector = '.avatar-popup';
+const avatarBtn = document.querySelector('.profile__edit-avatar');
+const avatarPopupBtn = document.querySelector('.avatar-popup__button');
 
 export {
+    confirmPopupBtn,
+    avatarBtn,
+    avatarPopupSelector,
     elementsSelector,
     imgPopupSelector,
     editBtn,
     addBtn,
+    avatarPopupBtn,
     profilePopupForm,
     profilePopupInputName,
     profilePopupInputJob,
@@ -67,6 +77,7 @@ export {
     profilePopupName,
     popups,
     placePopupForm,
+    profileSaveBtn,
     placePopupName,
     placePopupLink,
     imgPopup,

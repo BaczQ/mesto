@@ -13,6 +13,7 @@ export class FormValidator {
     enableValidation() {
         this._noSubmitDefault(); //отменяем стандартные submit'ы
         this._setListeners(); //устанавливаем слушатели
+        console.log('Работает валидация');
     }
 
     setError() { //включаем/выключаем ошибки
@@ -55,6 +56,7 @@ export class FormValidator {
 
     //Проверяем input, чтобы вывести/убрать сообщение об ошибке
     _validityState(inputElement) {
+        console.log(`#${inputElement.name}-error`);
         this._errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
 
         if (inputElement.validity.valid) {

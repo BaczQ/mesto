@@ -54,7 +54,7 @@ export class Card {
     //отрисовываем карточку
     cardView() {
         //console.log('Работает cardView() в class Card.js');
-        
+
 
         this._element = this._getTemplate();
         this._elementImg = this._element.querySelector(elementImgSelector);
@@ -67,7 +67,7 @@ export class Card {
         this._setListeners(); //вешаем слушатели
         this.setLikeCounter(this._cardLikes);
         this.setLikeStatus(this._cardLikes);
-        
+
 
         //проверяем нужен ли значок корзины
         if (!this._isTrash) {
@@ -108,7 +108,8 @@ export class Card {
     }
 
     _setLikeBtnListener() {
-        this._likeBtn.addEventListener('click', () => {this._likeClick(this._cardData);
+        this._likeBtn.addEventListener('click', () => {
+            this._likeClick(this._cardData);
         });
     }
 
@@ -116,7 +117,7 @@ export class Card {
     _setTrashBtnListener(callBackk) {
         this._trashBtn = this._element.querySelector(elementTrushSelector);
         this._trashBtn.addEventListener('click', () => {
-        this._handleTrashClick(this._cardData);
+            this._handleTrashClick(this._cardData);
         });
     }
 

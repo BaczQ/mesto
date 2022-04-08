@@ -17,15 +17,21 @@ import {
     elementsSelector,
     imgPopupSelector,
     editBtn,
+    avatarBtn,
     addBtn,
+    avatarPopupBtn,
     profileTitle,
     profileJob,
     profileAvatar,
     profilePopupSelector,
+    placePopupButton,
     placePopupSelector,
     profilePopupFormSelector,
     validationConfig,
-    confirmPopupSelector
+    confirmPopupSelector,
+    avatarPopupSelector,
+    profileSaveBtn,
+    confirmPopupBtn
 
 } from '../utils/constants.js';
 
@@ -50,20 +56,16 @@ import {
     UserInfo
 } from '../components/UserInfo.js';
 
+window.alert = function () {}; //чтобы алерты браузера не мешали
 
-	
-
-window.alert = function(){};//чтобы алерты браузера не мешали
-
+//---------- объявляем переменные
 const userInfo = new UserInfo({
     name: profileTitle,
     about: profileJob,
     avatar: profileAvatar
 });
 
-let currentCard = null;
 
-//---------- объявляем переменные
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-38/',
     headers: {
@@ -71,6 +73,8 @@ const api = new Api({
         'Content-Type': 'application/json'
     }
 });
+
+let currentCard = null;
 
 const cardList = new Section({
     renderer: (data) => {
@@ -80,32 +84,23 @@ const cardList = new Section({
 }, elementsSelector);
 
 //----------получаем инфо профиля из сервера
-
 api.getUserData().then((res) => {
-    //console.log('api.getUserData().then((res) => {');
-    //console.log(res);
     userInfo.setUserInfo(res);
-    //заполняем переменные для дальнейшей отправки карточек
     api.id = res._id;
 }).catch((err) => {
     console.log(`Ошибка чтения профиля пользователя. ${err}.`);
 });
 
 //----------получаем инфо для создания карточек из сервера
-
 api.getInitialCards()
     .then((data) => {
         // получаем каждую карточку отдельно
-        
-
         //проверяем принадлежит ли карточка пользователю
         for (let item in data) {
             const isTrash = data[item].owner._id == api.id;
             data[item].isTrash = isTrash;
         }
-
         cardList.renderItems(data);
-
     })
     .catch((err) => {
         console.log(`Ошибка чтения карточек с сервера. ${err}.`); // выведем ошибку в консоль
@@ -115,7 +110,7 @@ api.getInitialCards()
         }
     });
 
-export const imagePopup = new PopupWithImage(imgPopupSelector);
+const imagePopup = new PopupWithImage(imgPopupSelector);
 imagePopup.setEventListeners();
 
 const profilePopup = new PopupWithForm(profilePopupSelector, submitEditForm);
@@ -124,12 +119,32 @@ profilePopup.setEventListeners();
 const placePopup = new PopupWithForm(placePopupSelector, submitAddForm);
 placePopup.setEventListeners();
 
+const avatarPopup = new PopupWithForm(avatarPopupSelector, submitAvatarForm);
+avatarPopup.setEventListeners();
+
 //СЛУШАТЕЛИ
 //Нажатие кнопки редактирования профиля
 editBtn.addEventListener('click', () => {
     profilePopup.setInputValues(Object.values(userInfo.getUserInfo())); //обновляю инпуты в попапе профиля при его открытии
     profilePopup.open();
 });
+
+//Нажатие кнопки добавления аватара
+avatarBtn.addEventListener('click', () => {
+    avatarPopup.open();
+});
+
+function submitAvatarForm() {
+    avatarPopupBtn.textContent = 'Сохранение...';
+    api.setUserAvatar({
+            avatar: avatarPopup.getInputValues().avatar
+        })
+        .finally(() => {
+            avatarPopupBtn.textContent = 'Сохранить';
+            avatarPopup.close();
+            formAvatar.toggleButtonState();
+        });
+}
 
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', () => {
@@ -142,16 +157,16 @@ addBtn.addEventListener('click', () => {
 const formProfile = new FormValidator(validationConfig, profilePopupFormSelector);
 const formPlace = new FormValidator(validationConfig, '.place-popup__form');
 const formConfirm = new FormValidator(validationConfig, '.confirm-popup__form');
+const formAvatar = new FormValidator(validationConfig, '.avatar-popup__form');
 
 formProfile.enableValidation();
 formPlace.enableValidation();
 formConfirm.enableValidation();
+formAvatar.enableValidation();
 
 //ФУНКЦИИ
 //Создаём карточку
-
 function createCard(data) {
-    //console.log('Работает function createCard(data) index.js');
     const cardSelector = '.template-element';
 
     const newcard = new Card(data, userInfo._id, {
@@ -162,12 +177,12 @@ function createCard(data) {
         deleteLike, //клик по лайку
         handleTrashClick // клик по корзине
     });
-
     return newcard.cardView();
 }
 
 const confirmPopup = new PopupConfirm(confirmPopupSelector, {
     popupSubmit: (data) => {
+        confirmPopupBtn.textContent = 'Удаление...';
         api.deleteCard(data)
             .then(() => {
                 currentCard.remove();
@@ -177,24 +192,34 @@ const confirmPopup = new PopupConfirm(confirmPopupSelector, {
             })
             .catch((err) => {
                 console.log(err);
+            }).finally(() => {
+                confirmPopupBtn.textContent = 'Да';
             });
     }
 });
 
 //Меняем данные юзера после нажатия кнопки на попапе
 function submitEditForm(data) {
-    profilePopup.close();
     userInfo.setUserInfo(data);
+    profileSaveBtn.textContent = 'Сохранение...';
     api.setUserInfo({
         name: data.name,
         about: data.about
+    }).then(() => {
+        api.name = data.name;
+        api.about = data.about;
+        api.avatar = data.avatar;
+    }).catch((err) => {
+        console.log(`Ошибка при сохранении профиля на сервере.  ${err}.`);
+    }).finally(() => {
+        profileSaveBtn.textContent = 'Сохранить';
+        profilePopup.close();
     });
-    api.name = data.name;
-    api.about = data.about;
-    api.avatar = data.avatar;
 }
 
+//нажатие кнопки отправления карточки
 function submitAddForm() {
+    placePopupButton.textContent = 'Сохранение...';
     api.sendNewCard({ //отправляем данные карточки на сервер
             name: placePopup.getInputValues().submitPlace,
             link: placePopup.getInputValues().submitLink
@@ -215,19 +240,21 @@ function submitAddForm() {
                 cardSelector
             }, true);
             cardList.addItem(newCard);
+        }).catch((err) => {
+            console.log(`Ошибка при сохранении карточки на сервере.  ${err}.`);
+        })
+        .finally(() => {
+            placePopup.close();
+            placePopupButton.textContent = 'Создать';
         });
-    placePopup.close();
 }
 
 //Функции для работы const newcard
-
 function handleCardClick(text, img) {
-    //console.log('function handleCardClick(text, img) index.js');
     imagePopup.open(img, text);
 }
 
 function setLike(data) {
-    //console.log('function setLike(data) index.js');
     api.setLike(data)
         .then((data) => {
             this.setLikeCounter(data.likes);
@@ -235,17 +262,15 @@ function setLike(data) {
 }
 
 function deleteLike(data) {
-    //console.log('function deleteLike(data) index.js');
     api.deleteLike(data)
         .then((data) => {
             this.setLikeCounter(data.likes);
         }).catch((err) => {
-            console.log(err);
+            console.log(`Ошибка удаления карточки. ${err}.`);
         });
 }
 
 function handleTrashClick(data) {
-    //console.log('function handleTrashClick(data) index.js');
     currentCard = getCurrentCard();
     confirmPopup.open(data);
 }

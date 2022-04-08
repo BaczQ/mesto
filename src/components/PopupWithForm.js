@@ -31,24 +31,13 @@ export class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener('submit', () => {
       this._popupSubmit(this.getInputValues());
-      
-      //console.log(this._popupSubmit(this.getInputValues()));
     });
   }
 
   setConfirmListener(data, callback) {
-    console.log('!!!!!@!#!#');
-    console.log(data);
-    console.log(callback);
     this._popupSubmit;
-    
-
     this._form.addEventListener('submit', () => {
-      console.log('!!!!!@!#!#!!!!!@!#!#');
-      console.log(data);
       callback(data);
-      
-      
     });
   }
 

@@ -22,7 +22,6 @@ export class Api {
     }).then((res) => this._getStatus(res));
   }
 
-
   getUserData() {
     //console.log('Работает getUserData() в class Api');
     return fetch('https://mesto.nomoreparties.co/v1/cohort-38/users/me', {
@@ -30,7 +29,6 @@ export class Api {
       headers: this._headers,
     }).then(data => this._getStatus(data));
   }
-
 
   //отправляем данные на сервер
   setUserInfo(userData) {
@@ -48,13 +46,25 @@ export class Api {
       .then((res) => this._getStatus(res));
   }
 
+  setUserAvatar(link) {
+    console.log('userData');
+    console.log(link.avatar);
+
+    return fetch(this._baseUrl + 'users/me/avatar', {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: link.avatar
+      })
+    }).then((res) => this._getStatus(res));
+  }
 
   //Проверяем все статусы запросов
   _getStatus(res) {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject('Ошибка:' + res.status);
   }
 
   //Добавляем новую карточку
@@ -84,13 +94,11 @@ export class Api {
       }),
       headers: this._headers,
     }).then((res) => this._getStatus(res));
-
-    
   }
 
   deleteCard(data) {
     //console.log('deleteCard(data) in api');
-    return fetch(this._baseUrl + 'cards/'+ data._id, {
+    return fetch(this._baseUrl + 'cards/' + data._id, {
       method: 'DELETE',
       headers: this._headers
     }).then((res) => this._getStatus(res));
@@ -111,6 +119,4 @@ export class Api {
       headers: this._headers,
     }).then((res) => this._getStatus(res));
   }
-
-
 }
