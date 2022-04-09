@@ -74,7 +74,9 @@ const api = new Api({
     }
 });
 
+
 let currentCard = null;
+let id = null;
 
 const cardList = new Section({
     renderer: (data) => {
@@ -83,32 +85,23 @@ const cardList = new Section({
     }
 }, elementsSelector);
 
-//----------получаем инфо профиля из сервера
-api.getUserData().then((res) => {
-    userInfo.setUserInfo(res);
-    api.id = res._id;
-}).catch((err) => {
-    console.log(`Ошибка чтения профиля пользователя. ${err}.`);
-});
 
-//----------получаем инфо для создания карточек из сервера
-api.getInitialCards()
-    .then((data) => {
-        // получаем каждую карточку отдельно
-        //проверяем принадлежит ли карточка пользователю
-        for (let item in data) {
-            const isTrash = data[item].owner._id == api.id;
-            data[item].isTrash = isTrash;
-        }
-        cardList.renderItems(data);
-    })
-    .catch((err) => {
-        console.log(`Ошибка чтения карточек с сервера. ${err}.`); // выведем ошибку в консоль
-        for (let item in initialCards) {
-            const newCard = createCard(initialCards[item]);
-            cardList.addItem(newCard);
-        }
-    });
+Promise.all([ //в Promise.all передаем массив промисов которые нужно выполнить
+    api.getUserData(),
+    api.getInitialCards()
+]).then((values) => {
+    userInfo.setUserInfo(values[0]);
+    id = values[0]._id;
+    // получаем каждую карточку отдельно
+    //проверяем принадлежит ли карточка пользователю
+    for (let item in values[1]) {
+        const isTrash = values[1][item].owner._id == id;
+        values[1][item].isTrash = isTrash;
+    }
+    cardList.renderItems(values[1]);
+}).catch((err) => {
+    console.log(`Ошибка в работе с Api. ${err}.`);
+});
 
 const imagePopup = new PopupWithImage(imgPopupSelector);
 imagePopup.setEventListeners();
@@ -126,29 +119,41 @@ avatarPopup.setEventListeners();
 //Нажатие кнопки редактирования профиля
 editBtn.addEventListener('click', () => {
     profilePopup.setInputValues(Object.values(userInfo.getUserInfo())); //обновляю инпуты в попапе профиля при его открытии
+    formProfile.clearError();
     profilePopup.open();
+    formProfile.toggleButtonState();
 });
 
 //Нажатие кнопки добавления аватара
 avatarBtn.addEventListener('click', () => {
+    formAvatar.clearError();
     avatarPopup.open();
+    formAvatar.toggleButtonState();
 });
 
 function submitAvatarForm() {
     avatarPopupBtn.textContent = 'Сохранение...';
+    const avatarLink = avatarPopup.getInputValues().avatar;
+
     api.setUserAvatar({
-            avatar: avatarPopup.getInputValues().avatar
+            avatar: avatarLink
         })
-        .finally(() => {
-            avatarPopupBtn.textContent = 'Сохранить';
-            avatarPopup.close();
-            formAvatar.toggleButtonState();
-        });
+        .then(() => {
+            userInfo.setAvatar(avatarLink);
+        }).catch((err) => {
+            console.log(`Ошибка при сохранении аватара на сервере.  ${err}.`);
+}).finally(()=> {
+    avatarPopupBtn.textContent = 'Сохранить';
+    avatarPopup.close();
+    formAvatar.toggleButtonState();
+});
 }
 
 //Нажатие кнопки добавления карточки
 addBtn.addEventListener('click', () => {
     placePopup.setInputValues(); //обновляю инпуты в попапе добавления карточек при его открытии
+
+    formPlace.clearError();
     placePopup.open();
     formPlace.toggleButtonState();
 });
@@ -156,12 +161,10 @@ addBtn.addEventListener('click', () => {
 //Создаём объекты для валидации форм и валидируем форму
 const formProfile = new FormValidator(validationConfig, profilePopupFormSelector);
 const formPlace = new FormValidator(validationConfig, '.place-popup__form');
-const formConfirm = new FormValidator(validationConfig, '.confirm-popup__form');
-const formAvatar = new FormValidator(validationConfig, '.avatar-popup__form');
+const formAvatar = new FormValidator( validationConfig, '.avatar-popup__form');
 
 formProfile.enableValidation();
 formPlace.enableValidation();
-formConfirm.enableValidation();
 formAvatar.enableValidation();
 
 //ФУНКЦИИ
@@ -185,7 +188,9 @@ const confirmPopup = new PopupConfirm(confirmPopupSelector, {
         confirmPopupBtn.textContent = 'Удаление...';
         api.deleteCard(data)
             .then(() => {
-                currentCard.remove();
+                
+                currentCard.deleteCard();
+                
             })
             .then(() => {
                 confirmPopup.close();
@@ -197,6 +202,7 @@ const confirmPopup = new PopupConfirm(confirmPopupSelector, {
             });
     }
 });
+confirmPopup.setEventListeners(); //вешаем слушатели при открытии
 
 //Меняем данные юзера после нажатия кнопки на попапе
 function submitEditForm(data) {
@@ -206,9 +212,7 @@ function submitEditForm(data) {
         name: data.name,
         about: data.about
     }).then(() => {
-        api.name = data.name;
-        api.about = data.about;
-        api.avatar = data.avatar;
+        
     }).catch((err) => {
         console.log(`Ошибка при сохранении профиля на сервере.  ${err}.`);
     }).finally(() => {
@@ -252,6 +256,7 @@ function submitAddForm() {
 //Функции для работы const newcard
 function handleCardClick(text, img) {
     imagePopup.open(img, text);
+    
 }
 
 function setLike(data) {
@@ -270,11 +275,7 @@ function deleteLike(data) {
         });
 }
 
-function handleTrashClick(data) {
-    currentCard = getCurrentCard();
+function handleTrashClick(data, thisCard) {
+    currentCard = thisCard;
     confirmPopup.open(data);
-}
-
-function getCurrentCard() {
-    return event.target.parentNode.parentNode;
 }

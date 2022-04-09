@@ -91,7 +91,14 @@ export class Card {
         });
     }
 
-
+    deleteCard() {
+        this._deleteElem(this._element);
+      }
+    
+      _deleteElem(elem) {
+        elem.remove();
+        elem = null;
+      }
 
     //добавляем слушатели
     _setListeners(callBackk) {
@@ -117,7 +124,7 @@ export class Card {
     _setTrashBtnListener(callBackk) {
         this._trashBtn = this._element.querySelector(elementTrushSelector);
         this._trashBtn.addEventListener('click', () => {
-            this._handleTrashClick(this._cardData);
+            this._handleTrashClick(this._cardData, this);
         });
     }
 

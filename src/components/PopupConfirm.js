@@ -27,7 +27,6 @@ export class PopupConfirm extends Popup {
   open(data) {
     //console.log('Работает this.open(data) PopupConfirm.js');
     this._data = data;
-    this.setEventListeners(); //вешаем слушатели при открытии
     super.open();
 
   }

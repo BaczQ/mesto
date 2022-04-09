@@ -32,9 +32,6 @@ export class Api {
 
   //отправляем данные на сервер
   setUserInfo(userData) {
-    console.log('userData');
-    console.log(userData);
-
     return fetch(this._baseUrl + '/users/me', {
         method: 'PATCH',
         headers: this._headers,
@@ -47,9 +44,6 @@ export class Api {
   }
 
   setUserAvatar(link) {
-    console.log('userData');
-    console.log(link.avatar);
-
     return fetch(this._baseUrl + 'users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
@@ -69,9 +63,6 @@ export class Api {
 
   //Добавляем новую карточку
   sendNewCard(newCard) {
-    console.log('Сработал addNewCard(newCard)');
-    //console.log('ID = ' + this.id);
-
     return fetch(this._baseUrl + 'cards', {
       method: 'POST',
       headers: this._headers,
@@ -88,9 +79,7 @@ export class Api {
           _id: this.id,
           cohort: this.cohort
         },
-
         createdAt: new Date()
-
       }),
       headers: this._headers,
     }).then((res) => this._getStatus(res));

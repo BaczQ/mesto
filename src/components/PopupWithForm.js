@@ -22,9 +22,16 @@ export class PopupWithForm extends Popup {
     return this._inputValues;
   }
 
-  setInputValues(valuesList = ['', '']) {
-    this._inputs[0].value = valuesList[0];
-    this._inputs[1].value = valuesList[1];
+  setInputValues(valueList) {
+    if (valueList != undefined || null) {
+      this._inputs.forEach((item, i) => {
+        item.value = valueList[i];
+      });
+    } else {
+      this._inputs.forEach((item) => {
+        item.value = '';
+      });
+    }
   }
 
   setEventListeners() {
@@ -34,11 +41,5 @@ export class PopupWithForm extends Popup {
     });
   }
 
-  setConfirmListener(data, callback) {
-    this._popupSubmit;
-    this._form.addEventListener('submit', () => {
-      callback(data);
-    });
-  }
 
 }

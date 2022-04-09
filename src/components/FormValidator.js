@@ -41,7 +41,6 @@ export class FormValidator {
 
     //устанавливаем слушатели
     _setListeners() {
-
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._validityState(inputElement); //Проверяем input, чтобы вывести/убрать сообщение об ошибке
@@ -50,13 +49,10 @@ export class FormValidator {
         });
     }
 
-    _disableButton(btn, selector) {
-        btn.classList.add(selector);
-    }
 
+    
     //Проверяем input, чтобы вывести/убрать сообщение об ошибке
     _validityState(inputElement) {
-        console.log(`#${inputElement.name}-error`);
         this._errorElement = this._formElement.querySelector(`#${inputElement.name}-error`);
 
         if (inputElement.validity.valid) {

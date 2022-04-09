@@ -18,9 +18,15 @@ export class UserInfo {
   setUserInfo(data) {
     this._name.textContent = data.name; // заменили имя профиля значениями из сервера
     this._job.textContent = data.about; // заменили инфо профиля значениями из сервера
+
+
     if (data.avatar) {
-      this._avatar.src = data.avatar; // заменили аватар на аватар из сервера
+      this.setAvatar(data.avatar);
     }
     this._id = data._id; //присвоили id
+  }
+
+  setAvatar(link){
+    this._avatar.src = link; // заменили аватар на аватар из сервера
   }
 }
